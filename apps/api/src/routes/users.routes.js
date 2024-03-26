@@ -30,15 +30,19 @@ router.get("/:id", async (req, res, next) => {
 	}
 });
 
-router.post("/", async (req, res, next) => {
-	try {
-		const data = req.body;
-		const newUser = await service.create(data);
-		res.status(201).json(newUser);
-	} catch (error) {
-		next(error);
+router.post(
+	"/",
+	validatorHandler(createUserSchema, "body"),
+	async (req, res, next) => {
+		try {
+			const data = req.body;
+			const newUser = await service.create(data);
+			res.status(201).json(newUser);
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 router.patch("/:id", async (req, res, next) => {
 	try {

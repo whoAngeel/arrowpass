@@ -1,12 +1,12 @@
 const boom = require("@hapi/boom");
 
 // const bcrypt = require('bcrypt');
-class TicketService {
+class UserService {
 	constructor() {}
 
 	async create(data) {
-		const newTicket = data;
-		return newTicket;
+		const newUser = data;
+		return newUser;
 	}
 
 	async findAll() {
@@ -36,4 +36,4 @@ class TicketService {
 	}
 }
 
-module.exports = TicketService;
+module.exports = UserService;
