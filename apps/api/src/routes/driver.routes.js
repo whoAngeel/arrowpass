@@ -4,7 +4,7 @@ const router = new Router();
 
 router.get("/", async (req, res, next) => {
 	try {
-		return;
+		res.status(200).json();
 	} catch (error) {
 		next(error);
 	}

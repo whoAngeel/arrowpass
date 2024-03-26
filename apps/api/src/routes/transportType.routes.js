@@ -4,12 +4,13 @@ const router = new Router();
 
 router.get("/", async (req, res, next) => {
 	try {
-		return;
+		res.status(200).json({
+			message: "Welcome to the API!",
+		});
 	} catch (error) {
 		next(error);
 	}
 });
-
 router.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;

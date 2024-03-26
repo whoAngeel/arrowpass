@@ -5,6 +5,11 @@ const morgan = require("morgan");
 
 const { config } = require("./config");
 const routerApi = require("./routes");
+const {
+	logErrors,
+	boomErrorHandler,
+	errorHandler,
+} = require("./middlewares/error.handler");
 
 const app = express();
 
@@ -20,6 +25,9 @@ app.get("/", (req, res) => {
 routerApi(app);
 
 // middlewares de errores
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.listen(config.port, () => {
 	debug(`Server is running on http://localhost:${config.port}`);
