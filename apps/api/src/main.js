@@ -4,9 +4,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const { config } = require("./config");
-// const RotuerApi = require("./routes");
-// const routerApi = require("./routes");
-//
+const routerApi = require("./routes");
+
 const app = express();
 
 app.use(cors());
@@ -18,7 +17,7 @@ app.get("/", (req, res) => {
 	res.send("hello ArroWPass");
 });
 
-// routerApi(app);
+routerApi(app);
 
 // middlewares de errores
 
