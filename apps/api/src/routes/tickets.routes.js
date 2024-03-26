@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		return id;
+		return res.status(200).json({ id });
 	} catch (error) {
 		next(error);
 	}
