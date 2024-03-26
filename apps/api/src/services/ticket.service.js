@@ -1,6 +1,5 @@
 const boom = require("@hapi/boom");
 
-// const bcrypt = require('bcrypt');
 class TicketService {
 	constructor() {}
 

@@ -1,12 +1,20 @@
 const { Router } = require("express");
+const validatorHandler = require("../middlewares/validator.handler");
+const {
+	createUserSchema,
+	getUserSchema,
+	updateUserSchema,
+} = require("../schemas/users.schema");
+
+const UserService = require("../services/user.service");
+const service = new UserService();
 
 const router = new Router();
 
 router.get("/", async (req, res, next) => {
 	try {
-		res.status(200).json({
-			message: "Welcome to the API!",
-		});
+		const users = await service.findAll();
+		return res.status(200).json(users);
 	} catch (error) {
 		next(error);
 	}
@@ -15,7 +23,8 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		return res.status(200).json({ id });
+		const user = await service.findOne(id);
+		return res.status(200).json(user);
 	} catch (error) {
 		next(error);
 	}
@@ -23,8 +32,9 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
 	try {
-		const body = req.body;
-		res.status(201).json(body);
+		const data = req.body;
+		const newUser = await service.create(data);
+		res.status(201).json(newUser);
 	} catch (error) {
 		next(error);
 	}
@@ -34,16 +44,18 @@ router.patch("/:id", async (req, res, next) => {
 	try {
 		const data = req.body;
 		const { id } = req.params;
-		res.status(200).json(data);
+		const updatedUser = await service.update(id, data);
+		res.status(200).json(updatedUser);
 	} catch (error) {
 		next(error);
 	}
 });
 
-router.delete("/:id", function (req, res, next) {
+router.delete("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		res.status(200).json(id);
+		const user = await service.delete(id);
+		res.status(200).json(user);
 	} catch (error) {
 		next(error);
 	}
