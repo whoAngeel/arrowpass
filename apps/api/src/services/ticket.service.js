@@ -22,7 +22,7 @@ class TicketService {
 
 	async update(id, changes) {
 		// const
-		return;
+		return null;
 	}
 
 	async delete(id) {
