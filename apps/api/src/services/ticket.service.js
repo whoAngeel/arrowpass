@@ -22,9 +22,14 @@ class TicketService {
 
 	async update(id, changes) {
 		// const
+		return;
 	}
 
-	async delete(id) {}
+	async delete(id) {
+		return {
+			id,
+		};
+	}
 }
 
 module.exports = TicketService;

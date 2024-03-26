@@ -5,10 +5,16 @@
 		"apps/*"
 	],
 	"devDependencies": {
+		"cz-conventional-changelog": "^3.3.0",
 		"lerna": "^8.1.2",
 		"turbo": "^1.13.0"
 	},
 	"scripts": {
 		"dev": "turbo dev"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }
