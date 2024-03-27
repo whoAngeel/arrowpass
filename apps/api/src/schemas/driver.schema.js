@@ -1,28 +1,31 @@
 const joi = require("joi");
 
 const id = joi.number().integer();
-const nombre = joi.string().min(3);
-const telefono = joi.number().integer().max(15);
+const fullname = joi.string().min(3);
+const phone = joi.number().integer().max(15);
+const address = joi.string();
 const nomina = joi.string();
 
 const createDriverSchema = joi.object({
-    nombre: nombre.required(),
-    telefono,
-    nomina: nomina.required(),
+	fullname: fullname.required(),
+	phone,
+	address,
+	nomina: nomina.required(),
 });
 
 const updateDriverSchema = joi.object({
-    nombre,
-    telefono,
-    nomina
-})
+	fullname,
+	phone,
+	address,
+	nomina,
+});
 
 const getDriverSchema = joi.object({
-    id: id.required()
-})
+	id: id.required(),
+});
 
 module.exports = {
-    createDriverSchema, 
-    updateDriverSchema,
-    getDriverSchema
-}
+	createDriverSchema,
+	updateDriverSchema,
+	getDriverSchema,
+};
