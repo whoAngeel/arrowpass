@@ -1,14 +1,16 @@
 const boom = require("@hapi/boom");
 
-class TicketService {
+class JourneyService {
 	constructor() {}
 
 	async create(data) {
 		try {
-			const newTicket = { data };
-			return newTicket;
+			const newJourney = {
+				data,
+			};
+			return newJourney;
 		} catch (error) {
-			throw boom.badRequest("Error creating ticket");
+			throw boom.badData("Error creating journey");
 		}
 	}
 
@@ -19,24 +21,21 @@ class TicketService {
 	async findOne(id) {
 		return {
 			id,
-			ticket: "ticket encontrado",
+			journey: "dfadfa viaje",
 		};
 	}
 
 	async update(id, changes) {
-		// const
 		return {
 			id,
-			message: "Ticket updated",
+			message: "updated trip",
 		};
 	}
-
 	async delete(id) {
 		return {
-			id,
-			message: "Ticket deleted",
+			message: "deleted trip",
 		};
 	}
 }
 
-module.exports = TicketService;
+module.exports = JourneyService;

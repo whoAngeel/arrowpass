@@ -1,14 +1,14 @@
 const boom = require("@hapi/boom");
 
-class TicketService {
+class TerminalService {
 	constructor() {}
 
 	async create(data) {
 		try {
-			const newTicket = { data };
-			return newTicket;
+			const newTerminal = { data };
+			return newTerminal;
 		} catch (error) {
-			throw boom.badRequest("Error creating ticket");
+			throw boom.badRequest("Error creating Terminal");
 		}
 	}
 
@@ -19,7 +19,7 @@ class TicketService {
 	async findOne(id) {
 		return {
 			id,
-			ticket: "ticket encontrado",
+			terminal: "Terminal encontrado",
 		};
 	}
 
@@ -27,16 +27,16 @@ class TicketService {
 		// const
 		return {
 			id,
-			message: "Ticket updated",
+			message: "Terminal updated",
 		};
 	}
 
 	async delete(id) {
 		return {
 			id,
-			message: "Ticket deleted",
+			message: "Terminal deleted",
 		};
 	}
 }
 
-module.exports = TicketService;
+module.exports = TerminalService;
