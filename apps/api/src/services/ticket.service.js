@@ -34,6 +34,7 @@ class TicketService {
 	async delete(id) {
 		return {
 			id,
+			message: "Ticket deleted",
 		};
 	}
 }

@@ -24,7 +24,7 @@ router.get(
 	async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const ticket = await service.findOne(id); // TODO: checar pq no responde
+			const ticket = await service.findOne(id);
 			res.status(200).json(ticket);
 		} catch (error) {
 			next(error);
@@ -39,7 +39,7 @@ router.post(
 		try {
 			const body = req.body;
 			const newTicket = await service.create(body);
-			res.status(201).json(newTicket); // TODO: checar pq no responde
+			res.status(201).json(newTicket);
 		} catch (error) {
 			next(error);
 		}
@@ -62,14 +62,18 @@ router.patch(
 	}
 );
 
-router.delete("/:id", async function (req, res, next) {
-	try {
-		const { id } = req.params;
-		const deleted = await service.delete(id);
-		res.status(200).json(deleted);
-	} catch (error) {
-		next(error);
+router.delete(
+	"/:id",
+	validatorHandler(getTicketSchema, "params"),
+	async function (req, res, next) {
+		try {
+			const { id } = req.params;
+			const deleted = await service.delete(id);
+			res.status(200).json(deleted);
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 module.exports = router;
