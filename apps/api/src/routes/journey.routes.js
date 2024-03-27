@@ -8,7 +8,7 @@ const {
 	getJourneySchema,
 	createJourneySchema,
 	updateJourneySchema,
-} = require("../schemas/journey.shcema");
+} = require("../schemas/journey.schema");
 const service = new JourneyService();
 
 router.get("/", async (req, res, next) => {
