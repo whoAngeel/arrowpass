@@ -9,6 +9,7 @@ const {
 	logErrors,
 	boomErrorHandler,
 	errorHandler,
+	ormErrorHandler,
 } = require("./middlewares/error.handler");
 
 const app = express();
@@ -27,6 +28,7 @@ routerApi(app);
 // middlewares de errores
 app.use(logErrors);
 app.use(boomErrorHandler);
+app.use(ormErrorHandler);
 app.use(errorHandler);
 
 app.listen(config.port, () => {
