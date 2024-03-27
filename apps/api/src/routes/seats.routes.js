@@ -1,61 +1,48 @@
 const { Router } = require("express");
-const { createUserSchema } = require("../schemas/users.schema");
+const SeatService = require("../services/seat.service");
 const validatorHandler = require("../middlewares/validator.handler");
-// TODO esto es una copia descarada del router de usuarios, se tiene que cambiar el codigo para el correspondiente de asientos
+const {
+	createSeatSchema,
+	updateSeatSchema,
+	getSeatSchema
+} = require("../schemas/seats.schema");
+const service = new SeatService();
+
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
-	try {
-		const users = await service.findAll();
-		return res.status(200).json(users);
-	} catch (error) {
-		next(error);
-	}
-});
-
-router.get("/:id", async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const user = await service.findOne(id);
-		return res.status(200).json(user);
-	} catch (error) {
-		next(error);
-	}
-});
-
-router.post(
-	"/",
-	validatorHandler(createUserSchema, "body"),
+router.post("/", validatorHandler(createSeatSchema, "body"),
 	async (req, res, next) => {
 		try {
 			const data = req.body;
-			const newUser = await service.create(data);
-			res.status(201).json(newUser);
+			const newSeat = await service.create(data);
+			res.status(201).json(newSeat);
 		} catch (error) {
 			next(error);
 		}
-	}
-);
 
-router.patch("/:id", async (req, res, next) => {
+	});
+
+router.get("/", async (req, res, next) => {
 	try {
-		const data = req.body;
-		const { id } = req.params;
-		const updatedUser = await service.update(id, data);
-		res.status(200).json(updatedUser);
+		const seats = await service.findAll();
+		res.status(200).json(seats); 
 	} catch (error) {
 		next(error);
 	}
-});
+})
 
-router.delete("/:id", async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const user = await service.delete(id);
-		res.status(200).json(user);
-	} catch (error) {
-		next(error);
-	}
-});
+router.patch("/:id",
+	validatorHandler(getSeatSchema, "params"),
+	validatorHandler(updateSeatSchema, "body"),
+	async(req,res,next) => {
+		try {
+			const data = req.body; 
+			const {id} = req.params;
+			const updateSeat = await service.update(id, data);
+			res.status(200).json(updateSeat);
+		} catch (error) {
+			next(error); 
+		}
+	})
 
 module.exports = router;

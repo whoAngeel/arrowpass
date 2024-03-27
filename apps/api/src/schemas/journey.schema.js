@@ -6,7 +6,7 @@ const departure_time = joi.string(); // fecha de salida
 const arrival_time = joi.string();
 const status = joi.string();
 const duration = joi.string();
-// const ruta /// esto para que?
+// const ruta /// esto para que? => Era para despues para saber si el carro se desvia de la ruta
 const id_driver = joi.number().integer();
 const id_terminal_start = joi.number().integer();
 const id_terminal_end = joi.number().integer();
