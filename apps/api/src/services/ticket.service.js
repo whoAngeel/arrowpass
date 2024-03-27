@@ -4,8 +4,12 @@ class TicketService {
 	constructor() {}
 
 	async create(data) {
-		const newTicket = { name: "ticket" };
-		return newTicket;
+		try {
+			const newTicket = { data };
+			return newTicket;
+		} catch (error) {
+			throw boom.badRequest("Error creating ticket");
+		}
 	}
 
 	async findAll() {
@@ -21,7 +25,10 @@ class TicketService {
 
 	async update(id, changes) {
 		// const
-		return null;
+		return {
+			id,
+			message: "Ticket updated",
+		};
 	}
 
 	async delete(id) {
