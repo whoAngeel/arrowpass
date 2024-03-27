@@ -13,10 +13,10 @@ const sequelize = new Sequelize(URI, {
 sequelize
 	.authenticate()
 	.then(() => {
-		console.log("Conexión establecida correctamente.");
+		console.log("successful database connection");
 	})
 	.catch((err) => {
-		console.error("Error al conectar con la base de datos:", err);
+		console.error("error connecting to database:", err);
 	});
 
 setupModels(sequelize);

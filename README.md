@@ -56,4 +56,18 @@ $ npm run dev
 
 ```
 
+!NOTA! Si te da error la conexion de la base de datos, creala con el nombre 'test_arrowpass'
+
+## variables de entorno DEV
+
+cambiar de ser necesario
+
+```js
+DB_HOST = "localhost";
+DB_USER = "root";
+DB_PASS = admin;
+DB_PORT = 3306;
+DB_NAME = test_arrowpass;
+```
+
 <a href="#top">Back to top</a>
