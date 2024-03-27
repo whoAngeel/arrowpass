@@ -1,25 +1,42 @@
-const joi = require("joi"); 
+const joi = require("joi");
 const id = joi.number().integer().min(1);
-const placas = joi.string();
-const validType = ["economico", "business","firsclass"];
-const type = joi.string().min(5).valid(...validType);
-
+const plates = joi.string();
+const validType = ["economico", "business", "firstclass"];
+const type = joi
+	.string()
+	.min(5)
+	.valid(...validType);
+const model = joi.string();
+const brand = joi.string();
+const color = joi.string();
+const capacity = joi.number().integer().positive();
+const details = joi.string();
 const createVehicleSchema = joi.object({
-    placas: placas.required(),
-    type,
-}); 
+	plates: plates.required(),
+	type,
+	model,
+	brand,
+	color,
+	capacity: capacity.required(), /// capacidad
+	details,
+});
 
 const updateVehicleSchema = joi.object({
-    placas,
-    type,
-})
+	plates,
+	type,
+	model,
+	brand,
+	color,
+	capacity,
+	details,
+});
 
 const getVehicleSchema = joi.object({
-    id: id.required(),
-})
+	id: id.required(),
+});
 
 module.exports = {
-    createVehicleSchema,
-    updateVehicleSchema,
-    getVehicleSchema
-}
+	createVehicleSchema,
+	updateVehicleSchema,
+	getVehicleSchema,
+};
