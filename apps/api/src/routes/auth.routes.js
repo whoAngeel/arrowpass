@@ -26,18 +26,17 @@ router.post(
 		}
 	}
 );
-router.post(
+router.get(
 	"/login-google",
 	passport.authenticate("google", { session: false, scope: ["email", "profile"] }),
-	async (req, res, next) => {
-		try {
-			const user = req.user;
-			console.log(req);
-			return res.status(200).json(user);
-		} catch (error) {
-			next(error);
-		}
-	}
 );
+
+router.get(
+	"/login-google/callback",
+	passport.authenticate("google"), (request, response) =>{
+		response.send(200);
+	},
+);
+
 
 module.exports = router;

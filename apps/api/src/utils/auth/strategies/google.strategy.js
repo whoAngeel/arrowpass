@@ -25,10 +25,11 @@ const GoogleStrategy = new Strategy(
 	{
 		clientID: config.google_client_id,
 		clientSecret: config.google_client_secret,
-		callbackURL: "http://localhost:3000/api/auth/login/google",
+		callbackURL: "http://localhost:3000/api/auth/login-google/callback",
 		// accessType: "offline",
 	},
 	async function (accessToken, refreshToken, profile, done) {
+		console.log(profile)
 		try {
 			const user = await service.findByEmail(profile.emails[0].value);
 			if (!user) {
