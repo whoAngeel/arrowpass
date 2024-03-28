@@ -1,8 +1,8 @@
 const joi = require("joi");
 
 const id = joi.number().integer().min(1);
-const idViaje = joi.number().integer();
-const idUser = joi.number().integer();
+const journeyId = joi.number().integer();
+const userId = joi.number().integer();
 const passengerName = joi.string().min(3);
 const status = joi.string(); // emitido, cancelado
 const seatNumber = joi.string(); //
@@ -10,8 +10,8 @@ const price = joi.number().positive().precision(2);
 const payStub = joi.string(); // folio de pago
 
 const createTicketSchema = joi.object({
-	idViaje: idViaje.required(),
-	idUser: idUser.required(),
+	journeyId: journeyId.required(),
+	userId: userId.required(),
 	passengerName: passengerName.required(),
 	status,
 	seatNumber: seatNumber.required(),
@@ -20,8 +20,8 @@ const createTicketSchema = joi.object({
 });
 
 const updateTicketSchema = joi.object({
-	idUser,
-	idViaje,
+	userId,
+	journeyId,
 	passengerName,
 	status,
 	seatNumber,
