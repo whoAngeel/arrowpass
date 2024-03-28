@@ -26,7 +26,7 @@ router.post(
 		}
 	}
 );
-router.post(
+router.get(
 	"/login/google",
 	passport.authenticate("google", {
 		session: false,
