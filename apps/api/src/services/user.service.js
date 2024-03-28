@@ -37,11 +37,9 @@ class UserService {
 
 	async findByEmail(email) {
 		const user = await models.User.findOne({
-			where: {
-				email,
-			},
+			where: { email },
 		});
-		if (!user) throw boom.notFound("User not found");
+		// if (!user) throw boom.notFound("User not found");
 		return user;
 	}
 

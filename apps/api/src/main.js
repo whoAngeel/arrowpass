@@ -20,6 +20,8 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+require("./utils/auth");
+
 app.get("/", (req, res) => {
 	res.send("hello ArroWPass");
 });
