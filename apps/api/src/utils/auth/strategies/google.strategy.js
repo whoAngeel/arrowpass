@@ -8,24 +8,31 @@ const GoogleStrategy = new Strategy(
 	{
 		clientID: config.google_client_id,
 		clientSecret: config.google_client_secret,
-		callbackURL: "http://localhost:3000/api/auth/login/google/callback",
+		callbackURL: "http://localhost:3000/api/auth/login-google/callback",
 		// accessType: "offline",
 	},
-
-	async function verify(accessToken, refreshToken, profile, done) {
-		const user = await service.findByEmail(profile.emails[0].value);
-
-		console.log(profile.emails[0].value);
-		if (!user) {
-			// done(boom.notFound());
-			const newUser = await service.create({
+	async function (accessToken, refreshToken, profile, done) {
+		try {
+			console.log(profile.name.givenName);
+			const userData = {
 				email: profile.emails[0].value,
-				firstname: profile.displayName,
+				firstname: profile.name.givenName,
+				lastname: profile.name.familyName,
 				role: "passenger",
-			});
-			done(null, newUser);
+			};
+			console.log(userData);
+			const user = await service.findOrCreate(userData);
+			if (!user) {
+				done(boom.unauthorized(), false);
+			}
+
+			console.log("usuario encontrado");
+			return done(null, user);
+		} catch (error) {
+			done(error, false);
 		}
-		done(null, user);
+
+		// done(null, user);
 	}
 );
 

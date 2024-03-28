@@ -5,6 +5,14 @@ const { config } = require("../config");
 
 const router = Router();
 
+router.get("/user/info", (req, res, next) => {
+	try {
+		res.json({ user: req.user });
+	} catch (error) {
+		next(error);
+	}
+});
+
 router.post(
 	"/login/local",
 	passport.authenticate("local", { session: false }),
@@ -27,34 +35,20 @@ router.post(
 	}
 );
 router.get(
-	"/login/google",
-	passport.authenticate("google", {
-		session: false,
-		scope: ["email", "profile"],
-	}),
+	"/login-google",
+	passport.authenticate("google", { session: false, scope: ["email", "profile"] }),
 	async (req, res, next) => {
 		try {
-			const user = req.user;
-			console.log(req);
-			return res.status(200).json({ user });
+			console.log(req.user);
+			res.json(req.user);
 		} catch (error) {
 			next(error);
 		}
 	}
 );
 
-router.get(
-	"/login/google/callback",
-	passport.authenticate("google", {
-		successRedirect: "/auth/google/success",
-		failureRedirect: "/auth/google/failure",
-	})
-);
+router.get("/login-google/callback", passport.authenticate("google"), (req, res) => {
+	res.redirect("/api/auth/user/info");
+});
 
-router.get("/login/google/success", (req, res) => {
-	res.send("Inicio de sesion correcto");
-});
-router.get("/login/google/failure", (req, res) => {
-	res.send("Error al iniciar sesion");
-});
 module.exports = router;
