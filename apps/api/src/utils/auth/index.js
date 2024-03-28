@@ -9,6 +9,6 @@ passport.use(GoogleStrategy);
 passport.serializeUser((user, cb) => {
 	cb(null, user);
 });
-passport.deserializeUser((obj, cb) => {
-	cb(null, obj);
+passport.deserializeUser((user, cb) => {
+	cb(null, user);
 });
