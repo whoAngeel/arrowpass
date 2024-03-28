@@ -3,56 +3,67 @@ const bcrypt = require("bcrypt");
 const { models } = require("../libs/sequelize");
 
 class UserService {
-  constructor() {}
+	constructor() {}
 
-  async create(data) {
-    const hash = await bcrypt.hash(data.password, await bcrypt.genSalt());
-    const newUser = await models.User.create({
-      ...data,
-      password: hash,
-    });
+	async create(data) {
+		const hash = await bcrypt.hash(data.password, await bcrypt.genSalt());
+		const newUser = await models.User.create({
+			...data,
+			password: hash,
+		});
 
-    delete newUser.dataValues.password;
+		delete newUser.dataValues.password;
 
-    return newUser;
-  }
+		return newUser;
+	}
 
-  async findAll() {
-    return await models.User.findAll({
-      attributes: { exclude: ["password"] },
-    });
-  }
+	async findAll() {
+		return await models.User.findAll({
+			attributes: { exclude: ["password"] },
+		});
+	}
 
-  async findOne(id) {
-    return await models.User.findByPk(id, {
-      attributes: { exclude: ["password"] },
-    });
-  }
+	async findOne(id) {
+		const user = await models.User.findByPk(id, {
+			attributes: {
+				exclude: ["password"],
+			},
+		});
 
-  async update(id, changes) {
-    const user = await models.User.findByPk(id);
+		if (!user) throw boom.notFound("User not found");
 
-    if (!user) {
-      throw boom.notFound("user not found");
-    }
+		return user;
+	}
 
-    const updatedUser = await user.update(changes);
-    delete updatedUser.dataValues.password;
+	async findByEmail(email) {
+		const user = await models.User.findOne({
+			where: {
+				email,
+			},
+		});
+		if (!user) throw boom.notFound("User not found");
+		return user;
+	}
 
-    return updatedUser;
-  }
+	async update(id, changes) {
+		const user = this.findOne(id);
 
-  async delete(id) {
-    const user = await models.User.findByPk(id);
+		const updatedUser = await user.update(changes);
+		delete updatedUser.dataValues.password;
 
-    if (!user) {
-      throw boom.notFound("user not found");
-    }
+		return {
+			message: "User updated successfully",
+			updatedUser,
+		};
+	}
 
-    await user.destroy();
+	async delete(id) {
+		const user = this.findOne(id);
 
-    return user;
-  }
+		await user.destroy();
+
+		return user;
+	}
 }
 
 module.exports = UserService;
