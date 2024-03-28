@@ -24,7 +24,7 @@ const TerminalSchema = {
 		allowNull: false,
 	},
 	coords: {
-		type: DataTypes.STRING,
+		type: DataTypes.JSON,
 	},
 	createdAt: {
 		type: DataTypes.DATE,
