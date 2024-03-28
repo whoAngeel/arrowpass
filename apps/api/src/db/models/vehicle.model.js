@@ -13,6 +13,7 @@ const VehicleSchema = {
 		// placas del vehiculo
 		type: DataTypes.STRING,
 		allowNull: false,
+		unique: true,
 	},
 	type: {
 		type: DataTypes.STRING,

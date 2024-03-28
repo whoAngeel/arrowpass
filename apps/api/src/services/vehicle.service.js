@@ -1,38 +1,50 @@
-const boom  = require("@hapi/boom"); 
+const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
-class VehicleService{
-    constructor(){}
+class VehicleService {
+  constructor() {}
 
-    async create(data){
-        const newVehicle = data; 
-        return newVehicle;
+  async create(data) {
+    return await models.Vehicle.create(data);
+  }
+
+  async findAll() {
+    return await models.Vehicle.findAll();
+  }
+
+  async findOne(id) {
+    const vehicle = await models.Vehicle.findByPk(id);
+
+    if (!vehicle) {
+      throw boom.notFound("Vehiculo no encontrado");
     }
 
-    async findAll() {
-		return [];
-	}
+    return vehicle;
+  }
 
-	async findOne(id) {
-		return {
-			id,
-			ticket: "Autobus encontrado",
-		};
-	}
+  async update(id, changes) {
+    const vehicle = await models.Vehicle.findByPk(id);
 
-	async update(id, changes) {
-		// const
-		return {
-			id,
-			message: "Autobus actualizado",
-		};
-	}
+    if (!vehicle) {
+      throw boom.notFound("Vehiculo no encontrado");
+    }
 
-	async delete(id) {
-		return {
-			id,
-			message: "Autobus Eliminado",
-		};
-	}
+    const updatedVehicle = await vehicle.update(changes);
+
+    return updatedVehicle;
+  }
+
+  async delete(id) {
+    const vehicle = await models.Vehicle.findByPk(id);
+
+    if (!vehicle) {
+      throw boom.notFound("Vehiculo no encontrado");
+    }
+
+    await vehicle.destroy();
+
+    return vehicle;
+  }
 }
 
 module.exports = VehicleService;
