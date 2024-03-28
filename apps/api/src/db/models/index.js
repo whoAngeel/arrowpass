@@ -1,4 +1,5 @@
 const { Driver, DriversSchema } = require("./driver.model");
+const { Journey, JourneysSchema } = require("./journey.model");
 const { Seat, SeatsSchema } = require("./seat.model");
 const { Terminal, TerminalSchema } = require("./terminal.model");
 const { User, UsersSchema } = require("./user.model");
@@ -11,12 +12,14 @@ function setupModels(sequelize) {
 	Driver.init(DriversSchema, Driver.config(sequelize));
 	//tablas principales
 	Seat.init(SeatsSchema, Seat.config(sequelize));
+	Journey.init(JourneysSchema, Journey.config(sequelize));
 
 	Terminal.associate(sequelize.models);
 	Vehicle.associate(sequelize.models);
 	User.associate(sequelize.models);
 	Driver.associate(sequelize.models);
 	Seat.associate(sequelize.models);
+	Journey.associate(sequelize.models);
 }
 
 module.exports = setupModels;

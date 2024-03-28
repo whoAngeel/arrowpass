@@ -1,5 +1,4 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
-const { VEHICLE_TABLE } = require("./vehicle.model");
 
 const TICKET_TABLE = "tickets";
 

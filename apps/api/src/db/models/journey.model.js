@@ -1,8 +1,11 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { DRIVER_TABLE } = require("./driver.model");
+const { TERMINAL_TABLE } = require("./terminal.model");
+const { VEHICLE_TABLE } = require("./vehicle.model");
 
-const JOURNEY_TABLE = "";
+const JOURNEY_TABLE = "journeys";
 
-const TicketsSchema = {
+const JourneysSchema = {
 	// TODO Terminar este
 	id: {
 		allowNull: false,
@@ -35,15 +38,47 @@ const TicketsSchema = {
 	},
 	driverId: {
 		field: "id_driver",
+		type: DataTypes.INTEGER.UNSIGNED,
+		allowNull: false,
+		references: {
+			model: DRIVER_TABLE,
+			key: "id",
+		},
+		onDelete: "RESTRICT",
+		onUpdate: "CASCADE",
 	},
 	terminalEndId: {
 		field: "id_terminal_end",
+		type: DataTypes.INTEGER.UNSIGNED,
+		allowNull: false,
+		references: {
+			model: TERMINAL_TABLE,
+			key: "id",
+		},
+		onDelete: "RESTRICT",
+		onUpdate: "CASCADE",
 	},
 	terminalStartId: {
 		field: "id_terminal_start",
+		type: DataTypes.INTEGER.UNSIGNED,
+		allowNull: false,
+		references: {
+			model: TERMINAL_TABLE,
+			key: "id",
+		},
+		onDelete: "RESTRICT",
+		onUpdate: "CASCADE",
 	},
 	vehicleId: {
 		field: "id_vehicle",
+		type: DataTypes.INTEGER.UNSIGNED,
+		allowNull: false,
+		references: {
+			model: VEHICLE_TABLE,
+			key: "id",
+		},
+		onDelete: "RESTRICT",
+		onUpdate: "CASCADE",
 	},
 	createdAt: {
 		field: "created_at",
@@ -53,21 +88,21 @@ const TicketsSchema = {
 	},
 };
 
-class Ticket extends Model {
+class Journey extends Model {
 	static associate(models) {}
 
 	static config(sequelize) {
 		return {
 			sequelize,
-			tableName: TICKET_TABLE,
-			modelName: "Ticket",
+			tableName: JOURNEY_TABLE,
+			modelName: "Journey",
 			timestamps: false,
 		};
 	}
 }
 
 module.exports = {
-	TICKET_TABLE,
-	Ticket,
-	TicketsSchema,
+	JOURNEY_TABLE,
+	Journey,
+	JourneysSchema,
 };
