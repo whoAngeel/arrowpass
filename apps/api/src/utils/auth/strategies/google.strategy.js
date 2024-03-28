@@ -4,23 +4,6 @@ const boom = require("@hapi/boom");
 const UserService = require("../../../services/user.service");
 const service = new UserService();
 
-function extractProfile(profile) {
-	let imageUrl = "";
-	let email = "";
-	if (profile.photos && profile.photos.length) {
-		imageUrl = profile.photos[0].value;
-	}
-	if (profile.emails && profile.emails.length) {
-		email = profile.emails[0].value;
-	}
-	return {
-		id: profile.id,
-		displayName: profile.displayName,
-		image: imageUrl,
-		email,
-	};
-}
-
 const GoogleStrategy = new Strategy(
 	{
 		clientID: config.google_client_id,
@@ -46,6 +29,7 @@ const GoogleStrategy = new Strategy(
 		} catch (error) {
 			return done(error, false);
 		}
+		done(null, user);
 	}
 );
 
