@@ -23,11 +23,11 @@ const GoogleStrategy = new Strategy(
 			console.log(userData);
 			const user = await service.findOrCreate(userData);
 			if (!user) {
-				done(boom.unauthorized(), false);
+				done(boom.badGateway(), false);
 			}
 
 			console.log("usuario encontrado");
-			return done(null, user);
+			done(null, user);
 		} catch (error) {
 			done(error, false);
 		}

@@ -5,6 +5,10 @@ const { config } = require("../config");
 
 const router = Router();
 
+function isLoggedInd(req, res, next) {
+	req.user ? next() : res.sendStatus(404);
+}
+
 router.get("/user/info", (req, res, next) => {
 	try {
 		res.json({ user: req.user });
@@ -36,7 +40,7 @@ router.post(
 );
 router.get(
 	"/login-google",
-	passport.authenticate("google", { session: false, scope: ["email", "profile"] }),
+	passport.authenticate("google", { scope: ["email", "profile"] }),
 	async (req, res, next) => {
 		try {
 			console.log(req.user);
@@ -46,9 +50,20 @@ router.get(
 		}
 	}
 );
-
-router.get("/login-google/callback", passport.authenticate("google"), (req, res) => {
-	res.redirect("/api/auth/user/info");
+router.get("/protected", isLoggedInd, function (req, res) {
+	res.send(`Ruta protegida, bienvenido${req.user.firstname}`);
 });
+
+router.get("/google/failed", (req, res) => {
+	res.send("Fallo en la sesion");
+});
+
+router.get(
+	"/login-google/callback",
+	passport.authenticate("google", {
+		successRedirect: "/api/auth/protected",
+		failureRedirect: "/api/auth/failed",
+	})
+);
 
 module.exports = router;
