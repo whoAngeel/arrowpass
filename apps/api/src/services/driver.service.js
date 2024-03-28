@@ -1,41 +1,50 @@
 const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
-class DriverService{
-    constructor() {}
+class DriverService {
+  constructor() {}
 
-    async create(data){
-        try {
-            const newDriver = {
-                data
-            }
-        } catch (error) {
-            throw boom.badData("Error creating Driver")
-        }
+  async create(data) {
+    return await models.Driver.create(data);
+  }
+
+  async findAll() {
+    return await models.Driver.findAll();
+  }
+
+  async findOne(id) {
+    const driver = await models.Driver.findByPk(id);
+
+    if (!driver) {
+      throw boom.notFound("Conductor no encontrado");
     }
 
-    async findAll(){
-        return [];
+    return driver;
+  }
+
+  async update(id, changes) {
+    const driver = await models.Driver.findByPk(id);
+
+    if (!driver) {
+      throw boom.notFound("Conductor no encontrado");
     }
 
-    async findOne(id){
-        return{
-            id,
-            name: "Ronaldo",
-        }
+    const updatedDriver = await driver.update(changes);
+
+    return updatedDriver;
+  }
+
+  async delete(id) {
+    const driver = await models.Driver.findByPk(id);
+
+    if (!driver) {
+      throw boom.notFound("Conductor no encontrado");
     }
 
-    async update(id, changes){
-        return{
-            id,
-            message: "Conductor actualizado"
-        }
-    }
+    await driver.destroy();
 
-    async delete(id){
-        return{
-            message: "Conductor eliminado"
-        }
-    }
+    return driver;
+  }
 }
 
 module.exports = DriverService;

@@ -1,42 +1,50 @@
 const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
 class TerminalService {
-	constructor() {}
+  constructor() {}
 
-	async create(data) {
-		try {
-			const newTerminal = { data };
-			return newTerminal;
-		} catch (error) {
-			throw boom.badRequest("Error creating Terminal");
-		}
-	}
+  async create(data) {
+    return await models.Terminal.create(data);
+  }
 
-	async findAll() {
-		return [];
-	}
+  async findAll() {
+    return await models.Terminal.findAll();
+  }
 
-	async findOne(id) {
-		return {
-			id,
-			terminal: "Terminal encontrado",
-		};
-	}
+  async findOne(id) {
+    const terminal = await models.Terminal.findByPk(id);
 
-	async update(id, changes) {
-		// const
-		return {
-			id,
-			message: "Terminal updated",
-		};
-	}
+    if (!terminal) {
+      throw boom.notFound("Terminal no encontrada");
+    }
 
-	async delete(id) {
-		return {
-			id,
-			message: "Terminal deleted",
-		};
-	}
+    return terminal;
+  }
+
+  async update(id, changes) {
+    const terminal = await models.Terminal.findByPk(id);
+
+    if (!terminal) {
+      throw boom.notFound("Terminal no encontrada");
+    }
+
+    const updatedTerminal = await terminal.update(changes);
+
+    return updatedTerminal;
+  }
+
+  async delete(id) {
+    const terminal = await models.Terminal.findByPk(id);
+
+    if (!terminal) {
+      throw boom.notFound("Terminal no encontrada");
+    }
+
+    await terminal.destroy();
+
+    return terminal;
+  }
 }
 
 module.exports = TerminalService;
