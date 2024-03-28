@@ -24,16 +24,22 @@ class UserService {
   }
 
   async findOne(id) {
-    return await models.User.findByPk(id, {
+    const user = await models.User.findByPk(id, {
       attributes: { exclude: ["password"] },
     });
+
+    if (!user) {
+      throw boom.notFound("Usuario no encontrado");
+    }
+
+    return user;
   }
 
   async update(id, changes) {
     const user = await models.User.findByPk(id);
 
     if (!user) {
-      throw boom.notFound("user not found");
+      throw boom.notFound("Usuario no encontrado");
     }
 
     const updatedUser = await user.update(changes);
@@ -46,7 +52,7 @@ class UserService {
     const user = await models.User.findByPk(id);
 
     if (!user) {
-      throw boom.notFound("user not found");
+      throw boom.notFound("Usuario no encontrado");
     }
 
     await user.destroy();

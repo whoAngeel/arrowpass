@@ -2,7 +2,7 @@ const joi = require("joi");
 
 const id = joi.number().integer();
 const fullname = joi.string().min(3);
-const phone = joi.number().integer().max(15);
+const phone = joi.string().min(10).max(15);
 const address = joi.string();
 const nomina = joi.string();
 

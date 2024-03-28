@@ -15,10 +15,12 @@ const DriversSchema = {
 	},
 	phone: {
 		type: DataTypes.STRING(15),
+		unique: true,
 	},
 	nomina: {
 		type: DataTypes.STRING,
 		allowNull: false,
+		unique: true,
 	},
 	address: {
 		type: DataTypes.STRING,
