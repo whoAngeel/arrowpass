@@ -43,6 +43,27 @@ class UserService {
 		return user;
 	}
 
+	async findOrCreate(data) {
+		console.log(data.email);
+		const user = this.findByEmail(data.email);
+		return user;
+		// console.log(data.emails[0].value);
+		// const user = this.findByEmail(data.emails[0].value);
+		// if (!user) {
+		// 	const userData = {
+		// 		firstname: data.name.givenName,
+		// 		lastname: data.name.familyName,
+		// 		email: data.emails[0].value,
+		// 		role: "passenger",
+		// 	};
+		// 	const newUser = this.create(userData);
+		// 	console.log("USUARIO CREADO");
+		// 	return newUser;
+		// }
+		// console.log("USUARIO ENCONTRADO");
+		// return user;
+	}
+
 	async update(id, changes) {
 		const user = this.findOne(id);
 

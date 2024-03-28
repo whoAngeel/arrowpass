@@ -1,5 +1,5 @@
 const joi = require("joi");
-const validRoles = ["admin", "dev"];
+const validRoles = ["admin", "dev", "passenger"];
 
 const id = joi.number().integer().min(1);
 const firstname = joi.string().min(3);
