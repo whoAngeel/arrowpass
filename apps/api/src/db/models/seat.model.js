@@ -41,7 +41,11 @@ const SeatsSchema = {
 };
 
 class Seat extends Model {
-	static associate(models) {}
+	static associate(models) {
+		this.belongsTo(models.Vehicle, {
+			as: "vehicle",
+		});
+	}
 
 	static config(sequelize) {
 		return {

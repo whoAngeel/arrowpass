@@ -43,7 +43,12 @@ const VehicleSchema = {
 };
 
 class Vehicle extends Model {
-	static associate(models) {}
+	static associate(models) {
+		this.hasMany(models.Seat, {
+			as: "seats",
+			foreignKey: "vehicleId", // TODO testear que un vehiculo tenga muchos asientos
+		});
+	}
 	static config(sequelize) {
 		return {
 			sequelize,
