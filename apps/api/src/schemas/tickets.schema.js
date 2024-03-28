@@ -7,6 +7,7 @@ const passengerName = joi.string().min(3);
 const status = joi.string(); // emitido, cancelado
 const seatNumber = joi.string(); //
 const price = joi.number().positive().precision(2);
+const type = joi.string();
 const payStub = joi.string(); // folio de pago
 
 const createTicketSchema = joi.object({
@@ -14,6 +15,7 @@ const createTicketSchema = joi.object({
 	userId: userId.required(),
 	passengerName: passengerName.required(),
 	status,
+	type: type.required(),
 	seatNumber: seatNumber.required(),
 	price: price.required(),
 	payStub,
@@ -23,6 +25,7 @@ const updateTicketSchema = joi.object({
 	userId,
 	journeyId,
 	passengerName,
+	type,
 	status,
 	seatNumber,
 	price,
