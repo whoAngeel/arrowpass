@@ -35,7 +35,5 @@ app.use(errorHandler);
 app.set("sequelize", sequelize);
 
 app.listen(config.port, () => {
-	debug(`Server is running on http://localhost:${config.port}`);
-	// const URI = `mysql://${config.dbUser}:${config.dbPass}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
-	// console.log(URI);
+	console.log(`Server is running on http://localhost:${config.port}`);
 });

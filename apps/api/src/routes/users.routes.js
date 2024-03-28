@@ -11,10 +11,10 @@ const service = new UserService();
 
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (_req, res, next) => {
 	try {
 		const users = await service.findAll();
-		return res.status(200).json(users);
+		return res.json(users);
 	} catch (error) {
 		next(error);
 	}
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const user = await service.findOne(id);
-		return res.status(200).json(user);
+		return res.json(user);
 	} catch (error) {
 		next(error);
 	}
@@ -49,7 +49,7 @@ router.patch("/:id", async (req, res, next) => {
 		const data = req.body;
 		const { id } = req.params;
 		const updatedUser = await service.update(id, data);
-		res.status(200).json(updatedUser);
+		res.json(updatedUser);
 	} catch (error) {
 		next(error);
 	}
