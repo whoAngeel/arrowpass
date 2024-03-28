@@ -1,39 +1,39 @@
 const joi = require("joi");
 
 const id = joi.number().integer();
-const route_name = joi.string().min(3);
-const departure_time = joi.string(); // fecha de salida
-const arrival_time = joi.string();
+const routeName = joi.string().min(3);
+const departureTime = joi.string(); // fecha de salida
+const arrivalTime = joi.string();
 const status = joi.string();
 const duration = joi.string();
 // const ruta /// esto para que? => Era para despues para saber si el carro se desvia de la ruta
-const id_driver = joi.number().integer();
-const id_terminal_start = joi.number().integer();
-const id_terminal_end = joi.number().integer();
-const id_vehicle = joi.number().integer();
+const driverId = joi.number().integer();
+const terminalStartId = joi.number().integer();
+const terminalEndId = joi.number().integer();
+const vehicleId = joi.number().integer();
 
 const createJourneySchema = joi.object({
-	route_name: route_name.required(),
-	departure_time: joi.required(),
-	departure_time,
+	routeName: routeName.required(),
+	departureTime: joi.required(),
+	arrivalTime,
 	status: status.required(),
 	duration,
-	id_driver: id_driver.required(),
-	id_terminal_end: id_terminal_end.required(),
-	id_terminal_start: id_terminal_start.required(),
-	id_vehicle: id_vehicle.required(),
+	driverId: driverId.required(),
+	terminalEndId: terminalEndId.required(),
+	terminalStartId: terminalStartId.required(),
+	vehicleId: vehicleId.required(),
 });
 
 const updateJourneySchema = joi.object({
-	route_name,
-	departure_time,
-	arrival_time,
+	routeName,
+	departureTime,
+	arrivalTime,
 	status,
 	duration,
-	id_driver,
-	id_terminal_end,
-	id_terminal_start,
-	id_vehicle,
+	driverId,
+	terminalEndId,
+	terminalStartId,
+	vehicleId,
 });
 
 const getJourneySchema = joi.object({

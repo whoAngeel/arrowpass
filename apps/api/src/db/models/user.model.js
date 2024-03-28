@@ -31,6 +31,11 @@ const UsersSchema = {
 	birthdate: {
 		type: DataTypes.DATE,
 	},
+	role: {
+		type: DataTypes.STRING,
+		allowNull: false,
+	},
+
 	createdAt: {
 		field: "created_at",
 		type: DataTypes.DATE,
