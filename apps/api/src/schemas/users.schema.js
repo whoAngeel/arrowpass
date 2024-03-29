@@ -33,7 +33,15 @@ const updateUserSchema = joi.object({
 	birthdate,
 	role,
 });
-
+const registerUserSchema = joi.object({
+	firstname: firstname.required(),
+	lastname,
+	email: email.required(),
+	role,
+	phone,
+	birthdate,
+	password: password.required(),
+});
 const getUserSchema = joi.object({
 	id: id.required(),
 });
@@ -42,4 +50,5 @@ module.exports = {
 	createUserSchema,
 	updateUserSchema,
 	getUserSchema,
+	registerUserSchema,
 };

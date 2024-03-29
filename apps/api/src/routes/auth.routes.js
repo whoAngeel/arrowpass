@@ -3,10 +3,24 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config");
 
+const UserService = require("../services/user.service");
+const validatorHandler = require("../middlewares/validator.handler");
+const { registerUserSchema } = require("../schemas/users.schema");
+const userServiceInstance = new UserService();
+
 const router = Router();
 
 function isLoggedIn(req, res, next) {
 	req.user ? next() : res.sendStatus(404);
+}
+
+function generateUserToken(userData) {
+	const payload = {
+		sub: userData.id,
+		user: userData,
+	};
+	const token = jwt.sign(payload, config.secret);
+	return token;
 }
 
 router.get("/user/info", (req, res, next) => {
@@ -23,14 +37,32 @@ router.post(
 	async (req, res, next) => {
 		try {
 			const user = req.user;
-			const payload = {
-				sub: user.id,
-				user: user,
-			};
-			const token = jwt.sign(payload, config.secret);
+			const token = generateUserToken(user);
 			delete user.dataValues.password;
 			return res.json({
 				user,
+				token,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+router.post(
+	"/register",
+	validatorHandler(registerUserSchema, "body"),
+	async (req, res, next) => {
+		try {
+			const data = req.body;
+			const userData = {
+				...data,
+				role: "passenger",
+			};
+
+			const newUser = await userServiceInstance.create(userData);
+			const token = generateUserToken(newUser);
+			res.status(201).json({
+				newUser,
 				token,
 			});
 		} catch (error) {
@@ -45,11 +77,7 @@ router.get(
 		try {
 			console.log(req.user);
 			const user = req.user;
-			const payload = {
-				sub: user.id,
-				user: user,
-			};
-			const token = jwt.sign(payload, config.secret);
+			const token = generateUserToken(user);
 			delete user.dataValues.password;
 			res.json({
 				user,
