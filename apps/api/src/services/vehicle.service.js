@@ -5,11 +5,33 @@ class VehicleService {
   constructor() {}
 
   async create(data) {
-    return await models.Vehicle.create(data);
+    const vehicle = await models.Vehicle.create(data);
+
+    for (let i = 1; i <= vehicle.dataValues.capacity; i++) {
+      await models.Seat.create({
+        vehicleId: vehicle.id,
+        number: i,
+        status: "desocupado",
+      });
+    }
+
+    return vehicle;
   }
 
   async findAll() {
     return await models.Vehicle.findAll();
+  }
+
+  async findOneWithSeats(id) {
+    const vehicle = await models.Vehicle.findByPk(id, {
+      include: "seats",
+    });
+
+    if (!vehicle) {
+      throw boom.notFound("Vehiculo no encontrado");
+    }
+
+    return vehicle;
   }
 
   async findOne(id) {

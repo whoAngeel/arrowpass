@@ -33,6 +33,7 @@ router.get(
     }
   }
 );
+
 router.post(
   "/",
   validatorHandler(createVehicleSchema, "body"),

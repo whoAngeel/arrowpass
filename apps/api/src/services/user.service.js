@@ -35,6 +35,19 @@ class UserService {
     return user;
   }
 
+  async findOneWithTickets(id) {
+    const user = await models.User.findByPk(id, {
+      attributes: { exclude: ["password"] },
+      include: ["tickets", "reservations"],
+    });
+
+    if (!user) {
+      throw boom.notFound("Usuario no encontrado");
+    }
+
+    return user;
+  }
+
   async update(id, changes) {
     const user = await models.User.findByPk(id);
 

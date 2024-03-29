@@ -1,34 +1,22 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
-const { RESERVATION_TABLE } = require("./reservation.model");
+const { JOURNEY_TABLE } = require("./journey.model");
 const { USER_TABLE } = require("./user.model");
-const { SEAT_TABLE } = require("./seat.model");
 
-const TICKET_TABLE = "tickets";
+const RESERVATION_TABLE = "reservations";
 
-const TicketsSchema = {
+const ReservationsSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER.UNSIGNED,
   },
-  reservationId: {
-    field: "id_reservation",
+  journeyId: {
+    field: "id_journey",
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
     references: {
-      model: RESERVATION_TABLE,
-      key: "id",
-    },
-    onDelete: "RESTRICT",
-    onUpdate: "CASCADE",
-  },
-  seatId: {
-    field: "id_seat",
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-    references: {
-      model: SEAT_TABLE,
+      model: JOURNEY_TABLE,
       key: "id",
     },
     onDelete: "RESTRICT",
@@ -45,12 +33,13 @@ const TicketsSchema = {
     onDelete: "RESTRICT",
     onUpdate: "CASCADE",
   },
-  price: {
-    type: DataTypes.DOUBLE,
+  status: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  type: {
-    type: DataTypes.STRING,
+  paymentId: {
+    field: "id_payment",
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
   createdAt: {
@@ -61,36 +50,31 @@ const TicketsSchema = {
   },
 };
 
-class Ticket extends Model {
+class Reservation extends Model {
   static associate(models) {
-    this.belongsTo(models.User, {
+    Reservation.belongsTo(models.Journey, {
+      foreignKey: "journeyId",
+      as: "journey",
+    });
+
+    Reservation.belongsTo(models.User, {
       foreignKey: "userId",
       as: "user",
-    });
-
-    this.belongsTo(models.Reservation, {
-      foreignKey: "reservationId",
-      as: "reservation",
-    });
-
-    this.belongsTo(models.Seat, {
-      foreignKey: "seatId",
-      as: "seat",
     });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: TICKET_TABLE,
-      modelName: "Ticket",
+      tableName: RESERVATION_TABLE,
+      modelName: "Reservation",
       timestamps: false,
     };
   }
 }
 
 module.exports = {
-  TICKET_TABLE,
-  Ticket,
-  TicketsSchema,
+  RESERVATION_TABLE,
+  Reservation,
+  ReservationsSchema,
 };
