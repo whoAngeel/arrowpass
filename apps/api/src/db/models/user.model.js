@@ -23,7 +23,7 @@ const UsersSchema = {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
+    // allowNull: false, // se cambio por la autenticacion de google
   },
   phone: {
     type: DataTypes.STRING(10),

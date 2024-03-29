@@ -5,6 +5,7 @@ const DriverRouter = require("./driver.routes");
 const TerminalRouter = require("./terminal.routes");
 const VehicleRouter = require("./vehicle.routes");
 const TicketRouter = require("./ticket.routes");
+const Auth = require("./auth.routes");
 
 function routerApi(app) {
   const router = Router();
@@ -15,6 +16,7 @@ function routerApi(app) {
   router.use("/terminal", TerminalRouter);
   router.use("/vehicle", VehicleRouter);
   router.use("/ticket", TicketRouter);
+  router.use("/auth", Auth);
 }
 
 module.exports = routerApi;

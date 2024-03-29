@@ -25,12 +25,12 @@ class UserService {
 
   async findOne(id) {
     const user = await models.User.findByPk(id, {
-      attributes: { exclude: ["password"] },
+      attributes: {
+        exclude: ["password"],
+      },
     });
 
-    if (!user) {
-      throw boom.notFound("Usuario no encontrado");
-    }
+    if (!user) throw boom.notFound("User not found");
 
     return user;
   }
@@ -48,25 +48,39 @@ class UserService {
     return user;
   }
 
-  async update(id, changes) {
-    const user = await models.User.findByPk(id);
+  async findByEmail(email) {
+    const user = await models.User.findOne({
+      where: { email },
+    });
+    // if (!user) throw boom.notFound("User not found");
+    return user;
+  }
 
+  async findOrCreate(data) {
+    // console.log(data.email);
+    const user = await this.findByEmail(data.email);
     if (!user) {
-      throw boom.notFound("Usuario no encontrado");
+      const newUser = await models.User.create(data);
+      if (!newUser) throw boom.badData("Error creating new user");
+      return newUser;
     }
+    return user;
+  }
+
+  async update(id, changes) {
+    const user = this.findOne(id);
 
     const updatedUser = await user.update(changes);
     delete updatedUser.dataValues.password;
 
-    return updatedUser;
+    return {
+      message: "User updated successfully",
+      updatedUser,
+    };
   }
 
   async delete(id) {
-    const user = await models.User.findByPk(id);
-
-    if (!user) {
-      throw boom.notFound("Usuario no encontrado");
-    }
+    const user = this.findOne(id);
 
     await user.destroy();
 
