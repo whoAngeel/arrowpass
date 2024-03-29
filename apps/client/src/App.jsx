@@ -1,15 +1,11 @@
-function App() {
-	return (
-		<button
-			onClick={async () => {
-				const response = await fetch("/api");
-				const data = await response.text();
-				console.log(data);
-			}}
-		>
-			Click me
-		</button>
-	);
-}
+import Body from "./components/shared/Body";
+import Sidebar from "./components/shared/Sidebar";
 
-export default App;
+export default function App() {
+  return (
+    <div className="flex h-screen">
+      <Sidebar/>
+      <Body/>
+    </div>
+  );
+}
