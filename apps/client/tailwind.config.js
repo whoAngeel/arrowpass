@@ -10,7 +10,7 @@ export default {
       'phone': {'max': '400px'},
       // => @media (min-width: 640px and max-width: 767px) { ... }
 
-      'tablet': {'min': '400px', 'max': '668px'},
+      'tablet': {'min': '400px', 'max': '900px'},
       // => @media (min-width: 768px and max-width: 1023px) { ... }
 
       'computer': {'min': '668px'},
