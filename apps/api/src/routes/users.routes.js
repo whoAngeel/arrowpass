@@ -34,6 +34,20 @@ router.get(
   }
 );
 
+router.get(
+  "/:id/tickets",
+  validatorHandler(getUserSchema, "params"),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const user = await service.findOneWithTickets(id);
+      return res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/",
   validatorHandler(createUserSchema, "body"),
