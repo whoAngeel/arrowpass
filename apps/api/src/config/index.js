@@ -10,6 +10,7 @@ const config = {
 	secret: process.env.JWT_SECRET,
 	google_client_id: process.env.GOOGLE_CLIENT_ID,
 	google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
+	apiKey: process.env.APIKEY || "apikeyxd",
 };
 
 module.exports = { config };
