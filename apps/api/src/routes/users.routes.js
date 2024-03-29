@@ -62,7 +62,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
-	checkRoles("admin"),
+	// checkRoles("admin"),// TODO : agregar otra manera de que autentique el endpoint sin un token, o con una apikey mandada desde los headers
 	validatorHandler(createUserSchema, "body"),
 	async (req, res, next) => {
 		try {
