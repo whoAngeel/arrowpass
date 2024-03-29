@@ -7,6 +7,7 @@ const {
 } = require("../schemas/users.schema");
 
 const UserService = require("../services/user.service");
+const passport = require("passport");
 const service = new UserService();
 
 const router = new Router();

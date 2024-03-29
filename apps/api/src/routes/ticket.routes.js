@@ -3,6 +3,7 @@ const { Router } = require("express");
 const TicketService = require("../services/ticket.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getTicketSchema } = require("../schemas/ticket.schema");
+const passport = require("passport");
 const service = new TicketService();
 
 const router = new Router();
