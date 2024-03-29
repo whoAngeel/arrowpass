@@ -8,6 +8,7 @@ const {
 
 const UserService = require("../services/user.service");
 const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new UserService();
 
 const router = new Router();
@@ -15,6 +16,7 @@ const router = new Router();
 router.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	async (_req, res, next) => {
 		try {
 			const users = await service.findAll();
@@ -28,6 +30,7 @@ router.get(
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getUserSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -43,6 +46,7 @@ router.get(
 router.get(
 	"/:id/tickets",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getUserSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -58,6 +62,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(createUserSchema, "body"),
 	async (req, res, next) => {
 		try {
@@ -73,6 +78,7 @@ router.post(
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getUserSchema, "params"),
 	validatorHandler(updateUserSchema, "body"),
 	async (req, res, next) => {
@@ -90,6 +96,7 @@ router.patch(
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getUserSchema, "params"),
 	async (req, res, next) => {
 		try {

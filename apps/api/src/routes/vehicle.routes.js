@@ -8,6 +8,7 @@ const {
 } = require("../schemas/vehicle.schema");
 
 const VehicleService = require("../services/vehicle.service");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new VehicleService();
 
 const router = new Router();
@@ -15,6 +16,7 @@ const router = new Router();
 router.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	async (req, res, next) => {
 		try {
 			const vehicles = await service.findAll();
@@ -28,6 +30,7 @@ router.get(
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getVehicleSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -43,6 +46,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(createVehicleSchema, "body"),
 	async (req, res, next) => {
 		try {
@@ -58,6 +62,7 @@ router.post(
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getVehicleSchema, "params"),
 	validatorHandler(updateVehicleSchema, "body"),
 	async (req, res, next) => {
@@ -75,6 +80,7 @@ router.patch(
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getVehicleSchema, "params"),
 	async (req, res, next) => {
 		try {

@@ -8,6 +8,7 @@ const {
 	updateTerminalSchema,
 } = require("../schemas/terminal.schema");
 const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new TerminalService();
 
 const router = new Router();
@@ -15,6 +16,7 @@ const router = new Router();
 router.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	async (req, res, next) => {
 		try {
 			const terminals = await service.findAll();
@@ -28,6 +30,7 @@ router.get(
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getTerminalSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -43,6 +46,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(createTerminalSchema, "body"),
 	async (req, res, next) => {
 		try {
@@ -58,6 +62,7 @@ router.post(
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getTerminalSchema, "params"),
 	validatorHandler(updateTerminalSchema, "body"),
 	async (req, res, next) => {
@@ -75,6 +80,7 @@ router.patch(
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getTerminalSchema, "params"),
 	async function (req, res, next) {
 		try {

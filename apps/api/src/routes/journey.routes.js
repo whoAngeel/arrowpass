@@ -11,11 +11,13 @@ const {
 	reservationJourneySchema,
 } = require("../schemas/journey.schema");
 const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new JourneyService();
 
 router.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	async (req, res, next) => {
 		try {
 			let journeys = await service.findAll();
@@ -29,6 +31,7 @@ router.get(
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -44,6 +47,7 @@ router.get(
 router.get(
 	"/:id/seats",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -59,6 +63,7 @@ router.get(
 router.get(
 	"/:id/all",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -74,6 +79,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(createJourneySchema, "body"),
 	async (req, res, next) => {
 		try {
@@ -89,6 +95,7 @@ router.post(
 router.post(
 	"/:id/reservation",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getJourneySchema, "params"),
 	validatorHandler(reservationJourneySchema, "body"),
 	async (req, res, next) => {
@@ -107,6 +114,7 @@ router.post(
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getJourneySchema, "params"),
 	validatorHandler(updateJourneySchema, "body"),
 	async (req, res, next) => {
@@ -125,6 +133,7 @@ router.patch(
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getJourneySchema, "params"),
 	async function (req, res, next) {
 		try {

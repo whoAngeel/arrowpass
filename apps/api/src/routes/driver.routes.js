@@ -7,12 +7,14 @@ const {
 } = require("../schemas/driver.schema");
 const DriverService = require("../services/driver.service");
 const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new DriverService();
 const router = new Router();
 
 router.get(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	async (req, res, next) => {
 		try {
 			const driver = await service.findAll();
@@ -26,6 +28,7 @@ router.get(
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getDriverSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -41,6 +44,7 @@ router.get(
 router.post(
 	"/",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(createDriverSchema, "body"),
 	async (req, res, next) => {
 		try {
@@ -56,6 +60,7 @@ router.post(
 router.patch(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getDriverSchema, "params"),
 	validatorHandler(createDriverSchema, "body"),
 	async (req, res, next) => {
@@ -73,6 +78,7 @@ router.patch(
 router.delete(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin"),
 	validatorHandler(getDriverSchema, "params"),
 	function (req, res, next) {
 		try {

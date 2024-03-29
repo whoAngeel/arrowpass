@@ -4,6 +4,7 @@ const TicketService = require("../services/ticket.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { getTicketSchema } = require("../schemas/ticket.schema");
 const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new TicketService();
 
 const router = new Router();
@@ -11,6 +12,7 @@ const router = new Router();
 router.get(
 	"/:id",
 	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "passenger"),
 	validatorHandler(getTicketSchema, "params"),
 	async (req, res, next) => {
 		try {

@@ -9,7 +9,8 @@ function checkAPIKey(req, res, next) {
 
 function checkRoles(roles) {
 	return (req, res, next) => {
-		const user = req.user;
+		const user = req.user.user;
+		console.log(user);
 		if (roles.includes(user.role)) next();
 		else next(boom.unauthorized());
 	};
