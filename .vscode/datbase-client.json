@@ -1,0 +1,43 @@
+{
+    "database.connections": {
+        "1711526573396": {
+            "host": "127.0.0.1",
+            "dbPath": "",
+            "port": "3306",
+            "user": "root",
+            "authType": "default",
+            "password": "admin",
+            "encoding": "utf8",
+            "clientKeyPath": null,
+            "clientCertPath": null,
+            "caPath": null,
+            "database": "test_arrowpass",
+            "useSSL": false,
+            "usingSSH": false,
+            "showHidden": false,
+            "includeDatabases": "test_arrowpass",
+            "dbType": "MySQL",
+            "encrypt": true,
+            "isCluster": false,
+            "connectionUrl": "",
+            "srv": false,
+            "esAuth": "none",
+            "global": false,
+            "key": "1711526573396",
+            "timezone": "+00:00",
+            "ssh": {
+                "host": "",
+                "privateKeyPath": "C:\\Users\\whoangel\\.ssh\\id_rsa",
+                "port": 22,
+                "username": "root",
+                "type": "password",
+                "connectTimeout": 10000,
+                "algorithms": {
+                    "cipher": []
+                }
+            },
+            "name": "arrowpass",
+            "connectionKey": "database.connections"
+        }
+    }
+}

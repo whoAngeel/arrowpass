@@ -1,39 +1,64 @@
 const boom = require("@hapi/boom");
+const bcrypt = require("bcrypt");
+const { models } = require("../libs/sequelize");
 
-// const bcrypt = require('bcrypt');
 class UserService {
-	constructor() {}
+  constructor() {}
 
-	async create(data) {
-		const newUser = data;
-		return newUser;
-	}
+  async create(data) {
+    const hash = await bcrypt.hash(data.password, await bcrypt.genSalt());
+    const newUser = await models.User.create({
+      ...data,
+      password: hash,
+    });
 
-	async findAll() {
-		return [];
-	}
+    delete newUser.dataValues.password;
 
-	async findOne(id) {
-		return {
-			id,
-			ticket: "ticket encontrado",
-		};
-	}
+    return newUser;
+  }
 
-	async update(id, changes) {
-		// const
-		return {
-			id,
-			message: "user updated",
-		};
-	}
+  async findAll() {
+    return await models.User.findAll({
+      attributes: { exclude: ["password"] },
+    });
+  }
 
-	async delete(id) {
-		return {
-			id,
-			message: "user deleted",
-		};
-	}
+  async findOne(id) {
+    const user = await models.User.findByPk(id, {
+      attributes: { exclude: ["password"] },
+    });
+
+    if (!user) {
+      throw boom.notFound("Usuario no encontrado");
+    }
+
+    return user;
+  }
+
+  async update(id, changes) {
+    const user = await models.User.findByPk(id);
+
+    if (!user) {
+      throw boom.notFound("Usuario no encontrado");
+    }
+
+    const updatedUser = await user.update(changes);
+    delete updatedUser.dataValues.password;
+
+    return updatedUser;
+  }
+
+  async delete(id) {
+    const user = await models.User.findByPk(id);
+
+    if (!user) {
+      throw boom.notFound("Usuario no encontrado");
+    }
+
+    await user.destroy();
+
+    return user;
+  }
 }
 
 module.exports = UserService;

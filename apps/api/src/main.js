@@ -9,7 +9,9 @@ const {
 	logErrors,
 	boomErrorHandler,
 	errorHandler,
+	ormErrorHandler,
 } = require("./middlewares/error.handler");
+const sequelize = require("./libs/sequelize");
 
 const app = express();
 
@@ -27,8 +29,11 @@ routerApi(app);
 // middlewares de errores
 app.use(logErrors);
 app.use(boomErrorHandler);
+app.use(ormErrorHandler);
 app.use(errorHandler);
 
+app.set("sequelize", sequelize);
+
 app.listen(config.port, () => {
-	debug(`Server is running on http://localhost:${config.port}`);
+	console.log(`Server is running on http://localhost:${config.port}`);
 });
