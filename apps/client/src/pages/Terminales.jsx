@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Table,
   TableBody,
@@ -9,11 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const Cars = () => {
+const Terminales = () => {
   return (
     <div className="p-7">
-
-        <button>AGREGAR</button>
+      
       <Table className="border-black">
         <TableHeader>
           <TableRow className="border-black ">
@@ -42,7 +41,7 @@ const Cars = () => {
         </TableBody>
       </Table>
     </div>
-  );
-};
+  )
+}
 
-export default Cars;
+export default Terminales

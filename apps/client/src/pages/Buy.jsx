@@ -27,7 +27,7 @@ registerLocale("es", es);
 const Buy = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <div className="m-10 ">
+    <div className="p-5">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row">
           <ComboboxDemo />

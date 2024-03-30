@@ -15,7 +15,8 @@ import { Label } from "@/components/ui/label";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RiHomeSmile2Fill } from "react-icons/ri";
-import { HiTicket } from "react-icons/hi2";
+import { HiTicket, HiMiniIdentification } from "react-icons/hi2";
+import { FaBus, FaMapPin } from "react-icons/fa";
 import { useState } from "react";
 
 const Sidebar = ({ cambiarContenido }) => {
@@ -179,6 +180,34 @@ const Sidebar = ({ cambiarContenido }) => {
         >
           <HiTicket className="my-auto m-2" />
           <p className="text-xs my-auto font-bold">Your Tickets</p>
+        </button>
+      </div>
+      <div id="content">
+        <button
+          className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
+          onClick={() => cambiarContenido("buses")}
+        >
+          
+          <FaBus className="my-auto m-2" />
+          <p className="text-xs my-auto font-bold">Buses</p>
+        </button>
+      </div>
+      <div id="content">
+        <button
+          className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
+          onClick={() => cambiarContenido("terminales")}
+        >
+          <FaMapPin className="my-auto m-2"  />
+          <p className="text-xs my-auto font-bold">Terminales</p>
+        </button>
+      </div>
+      <div id="content">
+        <button
+          className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
+          onClick={() => cambiarContenido("conductores")}
+        >
+          <HiMiniIdentification className="my-auto m-2"  />
+          <p className="text-xs my-auto font-bold">Conductores</p>
         </button>
       </div>
     </div>

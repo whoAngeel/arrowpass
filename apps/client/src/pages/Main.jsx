@@ -9,7 +9,7 @@ import {
 
 const Main = () => {
   return (
-    <div className="m-7">
+    <div className="p-7">
       <h1 className="font-bold text-2xl">Tus boletos</h1>
       <Carousel
         opts={{
