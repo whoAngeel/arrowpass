@@ -1,15 +1,14 @@
-function App() {
-	return (
-		<button
-			onClick={async () => {
-				const response = await fetch("/api");
-				const data = await response.text();
-				console.log(data);
-			}}
-		>
-			Click me
-		</button>
-	);
-}
 
-export default App;
+import { useState } from "react";
+import Body from "./components/shared/Body";
+import Sidebar from "./components/shared/Sidebar";
+
+export default function App() {
+  const[contenido,setContenido] = useState('home'); 
+  return (
+    <div className="flex h-screen">
+      <Sidebar cambiarContenido={setContenido}/>
+      <Body contenido={contenido}/>
+    </div>
+  );
+}
