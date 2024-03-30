@@ -5,6 +5,7 @@ const UserService = require("./user.service");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config");
 const service = new UserService();
+const nodemailer = require("nodemailer");
 
 class AuthService {
 	constructor() {}
@@ -28,8 +29,35 @@ class AuthService {
 			token,
 		};
 	}
+	async findUser(email) {
+		const user = await service.findByEmail(email);
+		if (!user) throw boom.notFound();
+		return user;
+	}
 
-	sendMail() {}
+	async sendMail(email, messageData) {
+		const user = await this.findUser(email);
+		let transporter = nodemailer.createTransport({
+			host: "smtp.gmail.com",
+			port: 465,
+			secure: true,
+			auth: {
+				user: config.mail,
+				pass: config.mailPass,
+			},
+		});
+
+		await transporter.sendMail({
+			from: `${config.mail}`,
+			to: `${user.email}`,
+			subject: messageData.subject,
+			text: messageData.text,
+			html: messageData.html,
+		});
+		return {
+			message: "email sent",
+		};
+	}
 }
 
 module.exports = AuthService;

@@ -11,6 +11,8 @@ const config = {
 	google_client_id: process.env.GOOGLE_CLIENT_ID,
 	google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
 	apiKey: process.env.APIKEY || "apikeyxd",
+	mailPass: process.env.GOOGLE_MAIL_PASS,
+	mail: process.env.GOOGLE_MAIL,
 };
 
 module.exports = { config };

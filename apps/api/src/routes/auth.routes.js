@@ -26,7 +26,17 @@ router.get("/user/info", (req, res, next) => {
 
 router.post("/recovery", async (req, res, next) => {
 	try {
-	} catch (error) {}
+		const { email } = req.body;
+		const messageData = {
+			subject: "Recuperar contraseña",
+			text: "Para recuperar tu correo da click aqui",
+			html: `<button>Recuperar</button>`,
+		};
+		const rta = await authservice.sendMail(email, messageData);
+		res.json(rta);
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.post(
