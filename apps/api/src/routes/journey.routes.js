@@ -122,7 +122,6 @@ router.patch(
 			const data = req.body;
 			const { id } = req.params;
 			const updatedJourney = await service.update(id, data);
-
 			res.json(updatedJourney);
 		} catch (error) {
 			next(error);
@@ -146,4 +145,25 @@ router.delete(
 	}
 );
 
+router.patch(
+	"/:id/start",
+	passport.authenticate("jwt", { session: false }),
+	checkRoles("admin", "driver"),
+	validatorHandler(getJourneySchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req;
+			const { startDate } = req.body;
+			const updatedJourney = await service.setStart(id, startDate);
+			if (updatedJourney) res.status(200).json(updatedJourney);
+			else
+				res.status(404).json({
+					message: "Journey Not Found",
+				});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+router.patch("/:id/end");
 module.exports = router;

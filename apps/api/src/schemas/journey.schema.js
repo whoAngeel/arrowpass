@@ -13,53 +13,53 @@ const terminalEndId = joi.number().integer();
 const vehicleId = joi.number().integer();
 
 const createJourneySchema = joi.object({
-  name: name.required(),
-  departureDate: departureDate.required(),
-  arrivalDate: arrivalDate.required(),
-  duration: duration.required(),
-  ticketPrice: ticketPrice.required(),
-  driverId: driverId.required(),
-  terminalEndId: terminalEndId.required(),
-  terminalStartId: terminalStartId.required(),
-  vehicleId: vehicleId.required(),
+	name: name.required(),
+	departureDate: departureDate.required(), // hora de salida
+	arrivalDate: arrivalDate.required(), // hora de llegada
+	duration: duration.required(),
+	ticketPrice: ticketPrice.required(),
+	driverId: driverId.required(),
+	terminalEndId: terminalEndId.required(),
+	terminalStartId: terminalStartId.required(),
+	vehicleId: vehicleId.required(),
 });
 
 const reservationJourneySchema = joi.object({
-  userId: id.required(),
-  payment: joi.object({
-    amount: joi.number().positive().precision(2).required(),
-    method: joi.string().required(),
-  }),
-  tickets: joi.array().items(
-    joi.object({
-      seatId: joi.number().integer().required(),
-      userId: joi.number().integer().required(),
-      price: joi.number().positive().precision(2).required(),
-      type: joi.string().required(),
-    })
-  ),
+	userId: id.required(),
+	payment: joi.object({
+		amount: joi.number().positive().precision(2).required(),
+		method: joi.string().required(),
+	}),
+	tickets: joi.array().items(
+		joi.object({
+			seatId: joi.number().integer().required(),
+			userId: joi.number().integer().required(),
+			price: joi.number().positive().precision(2).required(),
+			type: joi.string().required(),
+		})
+	),
 });
 
 const updateJourneySchema = joi.object({
-  name,
-  departureDate,
-  arrivalDate,
-  status,
-  duration,
-  ticketPrice,
-  driverId,
-  terminalEndId,
-  terminalStartId,
-  vehicleId,
+	name,
+	departureDate,
+	arrivalDate,
+	status,
+	duration,
+	ticketPrice,
+	driverId,
+	terminalEndId,
+	terminalStartId,
+	vehicleId,
 });
 
 const getJourneySchema = joi.object({
-  id: id.required(),
+	id: id.required(),
 });
 
 module.exports = {
-  createJourneySchema,
-  updateJourneySchema,
-  getJourneySchema,
-  reservationJourneySchema,
+	createJourneySchema,
+	updateJourneySchema,
+	getJourneySchema,
+	reservationJourneySchema,
 };

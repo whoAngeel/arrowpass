@@ -2,121 +2,119 @@ const boom = require("@hapi/boom");
 const { models } = require("../libs/sequelize");
 
 class JourneyService {
-  constructor() {}
+	constructor() {}
 
-  async create(data) {
-    return await models.Journey.create({
-      ...data,
-      status: "scheduled",
-    });
-  }
+	async create(data) {
+		return await models.Journey.create({
+			...data,
+			status: "scheduled",
+		});
+	}
 
-  async getSeats(id) {
-    const journey = await models.Journey.findByPk(id, {
-      include: [
-        {
-          model: models.Vehicle,
-          as: "vehicle",
-          include: "seats",
-        },
-      ],
-    });
+	async getSeats(id) {
+		const journey = await models.Journey.findByPk(id, {
+			include: [
+				{
+					model: models.Vehicle,
+					as: "vehicle",
+					include: "seats",
+				},
+			],
+		});
 
-    if (!journey) {
-      throw boom.notFound("Journey Seats not found");
-    }
+		if (!journey) {
+			throw boom.notFound("Journey Seats not found");
+		}
 
-    return journey;
-  }
+		return journey;
+	}
 
-  async reservation(id, data) {
-    // create reservation
-    const reservation = await models.Reservation.create({
-      userId: data.userId,
-      journeyId: parseInt(id),
-      status: "pending",
-      paymentId: 1,
-    });
+	async reservation(id, data) {
+		// create reservation
+		const reservation = await models.Reservation.create({
+			userId: data.userId,
+			journeyId: parseInt(id),
+			status: "pending",
+			paymentId: 1,
+		});
 
-    // create tickets
-    const tickets = data.tickets.map((ticket) => ({
-      reservationId: reservation.id,
-      ...ticket,
-    }));
+		// create tickets
+		const tickets = data.tickets.map((ticket) => ({
+			reservationId: reservation.id,
+			...ticket,
+		}));
 
-    await models.Ticket.bulkCreate(tickets);
+		await models.Ticket.bulkCreate(tickets);
 
-    // update seats
-    const seatIds = data.tickets.map((ticket) => ticket.seatId);
-    await models.Seat.update(
-      { status: "ocupado" },
-      {
-        where: {
-          id: seatIds,
-        },
-      }
-    );
+		// update seats
+		const seatIds = data.tickets.map((ticket) => ticket.seatId);
+		await models.Seat.update(
+			{ status: "ocupado" },
+			{
+				where: {
+					id: seatIds,
+				},
+			}
+		);
 
-    return reservation;
-  }
+		return reservation;
+	}
 
-  async findAll() {
-    return await models.Journey.findAll();
-  }
+	async findAll() {
+		return await models.Journey.findAll();
+	}
 
-  async findOne(id) {
-    const journey = await models.Journey.findByPk(id, {
-      include: ["reservations"],
-    });
+	async findOne(id) {
+		const journey = await models.Journey.findByPk(id, {
+			include: ["reservations"],
+		});
 
-    if (!journey) {
-      throw boom.notFound("Journey not found");
-    }
+		if (!journey) {
+			throw boom.notFound("Journey not found");
+		}
 
-    return journey;
-  }
+		return journey;
+	}
 
-  async findOneWithRelations(id) {
-    const journey = await models.Journey.findByPk(id, {
-      include: [
-        "vehicle",
-        "driver",
-        "terminalStart",
-        "terminalEnd",
-        "reservations",
-      ],
-    });
+	async findOneWithRelations(id) {
+		const journey = await models.Journey.findByPk(id, {
+			include: [
+				"vehicle",
+				"driver",
+				"terminalStart",
+				"terminalEnd",
+				"reservations",
+			],
+		});
 
-    if (!journey) {
-      throw boom.notFound("Journey not found");
-    }
+		if (!journey) {
+			throw boom.notFound("Journey not found");
+		}
 
-    return journey;
-  }
+		return journey;
+	}
 
-  async update(id, changes) {
-    const journey = await models.Journey.findByPk(id);
+	async update(id, changes) {
+		const journey = this.findOne(id);
 
-    if (!journey) {
-      throw boom.notFound("Journey not found");
-    }
+		const updatedJourney = await journey.update(changes);
 
-    const updatedJourney = await journey.update(changes);
+		return updatedJourney;
+	}
 
-    return updatedJourney;
-  }
+	async delete(id) {
+		const journey = this.findOne(id);
 
-  async delete(id) {
-    const journey = await models.Journey.findByPk(id);
+		await journey.destroy();
 
-    if (!journey) {
-      throw boom.notFound("Journey not found");
-    }
-
-    await journey.destroy();
-
-    return journey;
-  }
+		return journey;
+	}
+	async setStart(id, startDate) {
+		const journey = this.findOne(id);
+		journey.departureDate = startDate;
+		(await journey).save();
+		return journey;
+	}
 }
 
 module.exports = JourneyService;
