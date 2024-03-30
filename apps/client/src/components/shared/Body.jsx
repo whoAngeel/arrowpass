@@ -3,6 +3,7 @@ import Main from "../../pages/Main"
 import Cars from "@/pages/Cars"
 import Terminales from "@/pages/Terminales"
 import Conductores from "@/pages/Conductores"
+import Journey from "@/pages/Journey"
 
 const Body = ({contenido}) => {
   return (
@@ -16,6 +17,7 @@ const Body = ({contenido}) => {
         {contenido == 'buses' && <Cars/>}
         {contenido == 'terminales' && <Terminales/>}
         {contenido == 'conductores' && <Conductores/>}
+        {contenido == 'Corridas' &&  <Journey/>}
     </div>
     </div>
   )

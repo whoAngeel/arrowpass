@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const Conductores = () => {
+const Journey = () => {
   return (
     <div className="p-7">
       <Dialog>
@@ -40,13 +41,18 @@ const Conductores = () => {
               <Label htmlFor="name" className="text-right">
                 Nombre
               </Label>
-              <Input id="name"  className="col-span-3" />
+              <Input id="name" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
                 Telefono
               </Label>
-              <Input id="username" type="number" className="col-span-3" min="0" />
+              <Input
+                id="username"
+                type="number"
+                className="col-span-3"
+                min="0"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
@@ -92,7 +98,7 @@ const Conductores = () => {
         </TableBody>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-export default Conductores
+export default Journey;
