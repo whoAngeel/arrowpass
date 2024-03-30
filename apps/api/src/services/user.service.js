@@ -48,11 +48,33 @@ class UserService {
 		return user;
 	}
 
+	async findOneTicket(ticketId) {
+		const ticket = await models.Ticket.findByPk(ticketId, {
+			include: [
+				{
+					model: models.Reservation,
+					as: "reservation",
+					include: {
+						model: models.Journey,
+						as: "journey",
+						include: [
+							"vehicle",
+							"terminalEnd",
+							"terminalStart",
+							"driver",
+						],
+					},
+				},
+			],
+		});
+
+		return ticket;
+	}
+
 	async findByEmail(email) {
 		const user = await models.User.findOne({
 			where: { email },
 		});
-		// delete user.dataValues.password;
 		// if (!user) throw boom.notFound("User not found");
 		return user;
 	}
