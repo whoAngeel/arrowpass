@@ -1,5 +1,6 @@
 const { Router } = require("express");
-
+const moment = require("moment");
+const { format } = require("timeago.js");
 const router = new Router();
 
 const JourneyService = require("../services/journey.service");
@@ -146,24 +147,50 @@ router.delete(
 );
 
 router.patch(
-	"/:id/start",
+	"/:id/time",
 	passport.authenticate("jwt", { session: false }),
 	checkRoles("admin", "driver"),
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {
-			const { id } = req;
-			const { startDate } = req.body;
-			const updatedJourney = await service.setStart(id, startDate);
-			if (updatedJourney) res.status(200).json(updatedJourney);
-			else
-				res.status(404).json({
-					message: "Journey Not Found",
+			const { id } = req.params;
+			const { action } = req.query;
+			moment.locale("es-MX");
+			const currentDate = moment();
+			let message;
+
+			console.log(format(currentDate));
+
+			// const currentDate = new Date(date);
+			if (action !== "start" && action !== "end") {
+				res.status(400).json({
+					error: 400,
+					message: "Bad request",
 				});
+			}
+			let journey;
+			if (action === "start") {
+				message = `La fecha de salida de origen se ha actualizado a ${moment(
+					currentDate
+				).format("dddd, MMMM Do YYYY, h:mm:ss a")}`;
+				journey = await service.update(id, {
+					departureDate: currentDate,
+				});
+			} else if (action === "end") {
+				message = `La fecha de llegada al destino se ha actualizado a ${moment(
+					currentDate
+				).format("dddd, MMMM Do YYYY, h:mm:ss a")}`;
+				journey = await service.update(id, {
+					arrivalDate: currentDate,
+				});
+			}
+			return res.status(200).json({
+				message,
+				journey,
+			});
 		} catch (error) {
 			next(error);
 		}
 	}
 );
-router.patch("/:id/end");
 module.exports = router;

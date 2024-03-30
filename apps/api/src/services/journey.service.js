@@ -95,7 +95,7 @@ class JourneyService {
 	}
 
 	async update(id, changes) {
-		const journey = this.findOne(id);
+		const journey = await this.findOne(id);
 
 		const updatedJourney = await journey.update(changes);
 
