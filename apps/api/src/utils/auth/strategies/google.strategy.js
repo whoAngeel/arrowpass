@@ -20,7 +20,7 @@ const GoogleStrategy = new Strategy(
 				lastname: profile.name.familyName,
 				role: "passenger",
 			};
-			console.log(userData);
+			// console.log(userData);
 			const user = await service.findOrCreate(userData);
 			if (!user) {
 				done(boom.badGateway(), false);

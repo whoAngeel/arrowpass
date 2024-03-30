@@ -69,14 +69,10 @@ router.get(
 	passport.authenticate("google", { scope: ["email", "profile"] }),
 	async (req, res, next) => {
 		try {
-			console.log(req.user);
+			// console.log(req.user);
 			const user = req.user;
-			const token = generateUserToken(user);
-			delete user.dataValues.password;
-			res.json({
-				user,
-				token,
-			});
+			const rta = authservice.signToken(user);
+			return res.json(rta);
 		} catch (error) {
 			next(error);
 		}
@@ -96,16 +92,8 @@ router.get(
 	(req, res, next) => {
 		try {
 			const user = req.user;
-			const payload = {
-				sub: user.id,
-				user: user,
-			};
-			const token = jwt.sign(payload, config.secret);
-			delete user.dataValues.password;
-			res.json({
-				user,
-				token,
-			});
+			const rta = authservice.signToken(user);
+			res.json(rta);
 		} catch (error) {
 			next(error);
 		}
