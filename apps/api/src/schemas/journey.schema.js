@@ -11,12 +11,14 @@ const driverId = joi.number().integer();
 const terminalStartId = joi.number().integer();
 const terminalEndId = joi.number().integer();
 const vehicleId = joi.number().integer();
+const schedule = joi.string();
 
 const createJourneySchema = joi.object({
 	name: name.required(),
-	departureDate: departureDate.required(), // hora de salida
-	arrivalDate: arrivalDate.required(), // hora de llegada
-	duration: duration.required(),
+	departureDate, // hora de salida
+	arrivalDate, // hora de llegada
+	duration,
+	schedule: schedule.required(),
 	ticketPrice: ticketPrice.required(),
 	driverId: driverId.required(),
 	terminalEndId: terminalEndId.required(),
@@ -47,6 +49,7 @@ const updateJourneySchema = joi.object({
 	status,
 	duration,
 	ticketPrice,
+	schedule,
 	driverId,
 	terminalEndId,
 	terminalStartId,
