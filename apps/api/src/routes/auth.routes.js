@@ -7,20 +7,13 @@ const UserService = require("../services/user.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const { registerUserSchema } = require("../schemas/users.schema");
 const userServiceInstance = new UserService();
+const AuthService = require("../services/auth.service");
+const authservice = new AuthService();
 
 const router = Router();
 
 function isLoggedIn(req, res, next) {
 	req.user ? next() : res.sendStatus(404);
-}
-
-function generateUserToken(userData) {
-	const payload = {
-		sub: userData.id,
-		user: userData,
-	};
-	const token = jwt.sign(payload, config.secret);
-	return token;
 }
 
 router.get("/user/info", (req, res, next) => {
@@ -31,18 +24,19 @@ router.get("/user/info", (req, res, next) => {
 	}
 });
 
+router.post("/recovery", async (req, res, next) => {
+	try {
+	} catch (error) {}
+});
+
 router.post(
 	"/login/local",
 	passport.authenticate("local", { session: false }),
 	async (req, res, next) => {
 		try {
 			const user = req.user;
-			const token = generateUserToken(user);
-			delete user.dataValues.password;
-			return res.json({
-				user,
-				token,
-			});
+			const rta = authservice.signToken(user);
+			return res.status(200).json(rta);
 		} catch (error) {
 			next(error);
 		}

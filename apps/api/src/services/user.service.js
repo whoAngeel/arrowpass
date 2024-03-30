@@ -52,6 +52,7 @@ class UserService {
 		const user = await models.User.findOne({
 			where: { email },
 		});
+		// delete user.dataValues.password;
 		// if (!user) throw boom.notFound("User not found");
 		return user;
 	}
