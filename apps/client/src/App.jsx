@@ -1,34 +1,20 @@
-import { Button } from "antd";
-import { useToast } from "@chakra-ui/react";
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
+import Login from './pages/Login';
+
+
 function App() {
-	return (
-		<>
-			{/* daisy */}
-			<div className="bg-primary">Hola </div>
-			{/* antdesign */}
-			<Button type="primary">hola </Button>
-			{/* chakra ui */}
-			<ToastExample></ToastExample>
-		</>
-	);
-}
-function ToastExample() {
-	const toast = useToast();
-	return (
-		<Button
-			onClick={() =>
-				toast({
-					title: "Account created.",
-					description: "We've created your account for you.",
-					status: "success",
-					duration: 9000,
-					isClosable: true,
-				})
-			}
-		>
-			Show Toast
-		</Button>
-	);
+  return (
+    <div>
+		<Navbar/>
+		<BrowserRouter>
+		<Routes>
+			<Route path='/login' element={<Login/>}></Route>
+		</Routes>
+		</BrowserRouter>
+	</div>
+  );
 }
 
 export default App;
