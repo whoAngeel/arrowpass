@@ -7,7 +7,7 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { CiMail } from "react-icons/ci";
-import { redirect } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 const suscriberSchema = z.object({
 	email: z
@@ -36,7 +36,7 @@ const Login = () => {
 				.then((res) => {
 					// console.log(res.data.token);
 					localStorage.setItem("userToken", res.data.token);
-					return redirect("/home"); // TODO redirigir al home o algo
+					redirect("/"); // TODO redirigir al home o algo
 				})
 				.catch((error) => {
 					if (error.response.status === 401)
@@ -123,9 +123,12 @@ const Login = () => {
 				</form>
 			</div>
 			<p className="text-center mt-9">
-				<button href="#" className="btn btn-link text-amber-500">
+				<Link
+					to={"/recovery/send-email"}
+					className="btn btn-link text-amber-500"
+				>
 					¿Olvidaste tu contraseña?
-				</button>
+				</Link>
 			</p>
 		</div>
 	);
