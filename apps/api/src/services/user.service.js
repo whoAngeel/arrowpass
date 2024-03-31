@@ -91,7 +91,7 @@ class UserService {
 	}
 
 	async update(id, changes) {
-		const user = this.findOne(id);
+		const user = await this.findOne(id);
 
 		const updatedUser = await user.update(changes);
 		delete updatedUser.dataValues.password;

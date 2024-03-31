@@ -32,7 +32,17 @@ router.post("/recovery", async (req, res, next) => {
 			text: "Para recuperar tu correo da click aqui",
 			html: `<button>Recuperar</button>`,
 		};
-		const rta = await authservice.sendMail(email, messageData);
+		const rta = await authservice.sendRecovery(email);
+		res.json(rta);
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.post("/change-password", async (req, res, next) => {
+	try {
+		const { token, newPassword } = req.body;
+		const rta = await authservice.changePassword(token, newPassword);
 		res.json(rta);
 	} catch (error) {
 		next(error);

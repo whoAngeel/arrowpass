@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 function ChangePassword() {
+	const navigate = useNavigate();
 	const toast = useToast();
 	const [isLoading, setIsLoading] = useState(false);
-
+	const [recoveryToken, setRecoveryToken] = useState("");
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		setRecoveryToken(urlParams.get("token"));
+	}, []);
 	const formik = useFormik({
 		initialValues: {
 			newPassword: "",
@@ -30,10 +36,11 @@ function ChangePassword() {
 		onSubmit: async (values) => {
 			setIsLoading(true);
 			try {
-				const response = await axios.post(
-					"/api/auth/change-password",
-					values
-				);
+				console.log(recoveryToken);
+				const response = await axios.post("/api/auth/change-password", {
+					token: recoveryToken,
+					newPassword: values.newPassword,
+				});
 				if (response.status === 200) {
 					toast({
 						title: "Contraseña actualizada exitosamente",
@@ -43,6 +50,7 @@ function ChangePassword() {
 						isClosable: true,
 					});
 					formik.resetForm();
+					navigate("/login");
 				}
 			} catch (error) {
 				console.error(error);

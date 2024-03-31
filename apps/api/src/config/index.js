@@ -13,6 +13,7 @@ const config = {
 	apiKey: process.env.APIKEY || "apikeyxd",
 	mailPass: process.env.GOOGLE_MAIL_PASS,
 	mail: process.env.GOOGLE_MAIL,
+	secretRecovery: process.env.SECRET_RECOVERY || "recoverysecret",
 };
 
 module.exports = { config };

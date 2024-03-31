@@ -7,7 +7,7 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { CiMail } from "react-icons/ci";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const suscriberSchema = z.object({
 	email: z
@@ -38,7 +38,7 @@ const Login = () => {
 				.then((res) => {
 					// console.log(res.data.token);
 					localStorage.setItem("userToken", res.data.token);
-					console.log("sadddddd");
+					console.log("logged in");
 					navigate("/");
 				})
 				.catch((error) => {
