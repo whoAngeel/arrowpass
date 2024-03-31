@@ -23,17 +23,19 @@ export const Navbar = () => {
         </button>
       </div>
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl" href="/">ArroWPass</a>
+        <a className="btn btn-ghost text-xl" href="/">
+          ArroWPass
+        </a>
       </div>
       <div className="flex-none">
+        
         {/* You can open the modal using document.getElementById('ID').showModal() method */}
-        <a
-          className="btn"
-          href="/login"
-        >
+        <a className="btn mr-2" href="/login">
           Inicia Sesion
         </a>
-        
+        <a className="btn" href="/register">
+          Registrate
+        </a>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { CiMail } from "react-icons/ci";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 const suscriberSchema = z.object({
 	email: z
@@ -19,6 +19,8 @@ const suscriberSchema = z.object({
 // type Suscriber = z.infer(<type)
 
 const Login = () => {
+	const navigate = useNavigate();
+
 	const toast = useToast();
 	const [isLoading, setIsLoading] = useState(false);
 	const formik = useFormik({
@@ -36,7 +38,8 @@ const Login = () => {
 				.then((res) => {
 					// console.log(res.data.token);
 					localStorage.setItem("userToken", res.data.token);
-					redirect("/"); // TODO redirigir al home o algo
+					console.log("sadddddd");
+					navigate("/");
 				})
 				.catch((error) => {
 					if (error.response.status === 401)
