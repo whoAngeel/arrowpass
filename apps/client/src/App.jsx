@@ -3,8 +3,11 @@ import { useToast } from "@chakra-ui/react";
 function App() {
 	return (
 		<>
+			{/* daisy */}
 			<div className="bg-primary">Hola </div>
+			{/* antdesign */}
 			<Button type="primary">hola </Button>
+			{/* chakra ui */}
 			<ToastExample></ToastExample>
 		</>
 	);
