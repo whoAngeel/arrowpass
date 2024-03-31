@@ -76,7 +76,7 @@
 }
 
 body{
-  background: rgb(255,212,101);
-  background: linear-gradient(180deg, rgba(255,212,101,1) 41%, rgba(245,105,6,1) 100%);
-
+  /* background: rgb(255,212,101);
+  background: linear-gradient(180deg, rgba(255,212,101,1) 41%, rgba(245,105,6,1) 100%); */
+  background-color: #f2f2f2;
 }

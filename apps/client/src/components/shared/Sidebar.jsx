@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RiHomeSmile2Fill } from "react-icons/ri";
 import { HiTicket, HiMiniIdentification } from "react-icons/hi2";
 import { FaBus, FaMapPin } from "react-icons/fa";
-import { IoIosCalendar } from "react-icons/io"; 
+import { IoIosCalendar, IoLogoGoogle } from "react-icons/io";
 import { useState } from "react";
 
 const Sidebar = ({ cambiarContenido }) => {
@@ -88,10 +88,14 @@ const Sidebar = ({ cambiarContenido }) => {
                   Registrate
                 </a>
               </DialogDescription>
+              <Button className="mt-2">
+                <IoLogoGoogle />
+                <p className="ml-2">Inicia sesión con Google</p>
+              </Button>
             </div>
           )}
           {register && (
-            <div >
+            <div>
               <DialogHeader>
                 <DialogTitle>Registrate</DialogTitle>
                 <DialogDescription>
@@ -151,12 +155,17 @@ const Sidebar = ({ cambiarContenido }) => {
                   Iniciar sesión
                 </a>
               </DialogDescription>
+              <Button className="mt-2">
+                <IoLogoGoogle />
+                <p className="ml-2">Registrate con Google</p>
+              </Button>
             </div>
           )}
+
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
               <Button type="submit" variant="secondary">
-                Close
+                Entrar
               </Button>
             </DialogClose>
           </DialogFooter>
@@ -188,7 +197,6 @@ const Sidebar = ({ cambiarContenido }) => {
           className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
           onClick={() => cambiarContenido("buses")}
         >
-          
           <FaBus className="my-auto m-2" />
           <p className="text-xs my-auto font-bold">Buses</p>
         </button>
@@ -198,7 +206,7 @@ const Sidebar = ({ cambiarContenido }) => {
           className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
           onClick={() => cambiarContenido("terminales")}
         >
-          <FaMapPin className="my-auto m-2"  />
+          <FaMapPin className="my-auto m-2" />
           <p className="text-xs my-auto font-bold">Terminales</p>
         </button>
       </div>
@@ -207,7 +215,7 @@ const Sidebar = ({ cambiarContenido }) => {
           className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
           onClick={() => cambiarContenido("conductores")}
         >
-          <HiMiniIdentification className="my-auto m-2"  />
+          <HiMiniIdentification className="my-auto m-2" />
           <p className="text-xs my-auto font-bold">Conductores</p>
         </button>
       </div>
@@ -216,8 +224,7 @@ const Sidebar = ({ cambiarContenido }) => {
           className="flex flex-row hover:bg-slate-200 h-8 rounded-lg m-2 w-[90%]"
           onClick={() => cambiarContenido("Corridas")}
         >
-
-          <IoIosCalendar className="my-auto m-2"/>
+          <IoIosCalendar className="my-auto m-2" />
           <p className="text-xs my-auto font-bold">Corridas</p>
         </button>
       </div>

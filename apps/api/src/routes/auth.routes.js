@@ -56,7 +56,7 @@ router.post(
 			const data = req.body;
 			const userData = {
 				...data,
-				role: "passenger",
+				//role: "passenger",
 			};
 
 			const newUser = await userServiceInstance.create(userData);
