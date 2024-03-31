@@ -2,9 +2,12 @@ import React from "react";
 import { Button } from "antd";
 import { useToast } from "@chakra-ui/react";
 import { FaGoogle } from "react-icons/fa6";
+import { Navbar } from "../components/Navbar";
 const Home = () => {
 	return (
 		<>
+			<Navbar />
+
 			{/* daisy */}
 			<div className="bg-primary">Hola </div>
 			{/* antdesign */}

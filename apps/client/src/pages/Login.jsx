@@ -36,7 +36,7 @@ const Login = () => {
 				.then((res) => {
 					// console.log(res.data.token);
 					localStorage.setItem("userToken", res.data.token);
-					return redirect("/home");
+					return redirect("/home"); // TODO redirigir al home o algo
 				})
 				.catch((error) => {
 					if (error.response.status === 401)
