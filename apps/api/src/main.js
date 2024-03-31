@@ -2,6 +2,8 @@ const express = require("express");
 const debug = require("debug")("api:main");
 const cors = require("cors");
 const morgan = require("morgan");
+const session = require("express-session");
+const passport = require("passport");
 
 const { config } = require("./config");
 const routerApi = require("./routes");
@@ -19,6 +21,20 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(
+	session({
+		secret: config.secret,
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			secure: false,
+		},
+	})
+);
+
+require("./utils/auth");
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
 	res.send("hello ArroWPass");

@@ -1,42 +1,39 @@
 const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
 class TicketService {
-	constructor() {}
+  constructor() {}
+  
+  async findOne(id) {
+    const ticket = await models.Ticket.findByPk(id, {
+      include: [
+        "user",
+        {
+          model: models.Reservation,
+          as: "reservation",
+          include: {
+            model: models.Journey,
+            as: "journey",
+            include: [
+              "driver",
+              "vehicle",
+              "driver",
+              "terminalStart",
+              "terminalEnd",
+            ],
 
-	async create(data) {
-		try {
-			const newTicket = { data };
-			return newTicket;
-		} catch (error) {
-			throw boom.badRequest("Error creating ticket");
-		}
-	}
+          },
+        },
+        "seat",
+      ],
+    });
 
-	async findAll() {
-		return [];
-	}
+    if (!ticket) {
+      throw boom.notFound("Ticket no encontrado");
+    }
 
-	async findOne(id) {
-		return {
-			id,
-			ticket: "ticket encontrado",
-		};
-	}
-
-	async update(id, changes) {
-		// const
-		return {
-			id,
-			message: "Ticket updated",
-		};
-	}
-
-	async delete(id) {
-		return {
-			id,
-			message: "Ticket deleted",
-		};
-	}
+    return ticket;
+  }
 }
 
 module.exports = TicketService;

@@ -7,21 +7,30 @@ const {
 } = require("../schemas/users.schema");
 
 const UserService = require("../services/user.service");
+const passport = require("passport");
+const { checkRoles } = require("../middlewares/auth.handler");
 const service = new UserService();
 
 const router = new Router();
 
-router.get("/", async (_req, res, next) => {
-  try {
-    const users = await service.findAll();
-    return res.json(users);
-  } catch (error) {
-    next(error);
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin", "passenger"),
+  async (_req, res, next) => {
+    try {
+      const users = await service.findAll();
+      return res.json(users);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get(
   "/:id",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin", "passenger"),
   validatorHandler(getUserSchema, "params"),
   async (req, res, next) => {
     try {
@@ -34,8 +43,41 @@ router.get(
   }
 );
 
+router.get(
+  "/:id/tickets",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin", "passenger"),
+  validatorHandler(getUserSchema, "params"),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const user = await service.findOneWithTickets(id);
+      return res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/ticket/:ticketId",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin", "passenger"),
+  async (req, res, next) => {
+    try {
+      const { ticketId } = req.params;
+      const user = await service.findOneTicket(ticketId);
+      return res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/",
+  passport.authenticate("jwt", { session: false }),
+  // checkRoles("admin"),// TODO : agregar otra manera de que autentique el endpoint sin un token, o con una apikey mandada desde los headers
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
     try {
@@ -50,6 +92,8 @@ router.post(
 
 router.patch(
   "/:id",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin"),
   validatorHandler(getUserSchema, "params"),
   validatorHandler(updateUserSchema, "body"),
   async (req, res, next) => {
@@ -66,6 +110,8 @@ router.patch(
 
 router.delete(
   "/:id",
+  passport.authenticate("jwt", { session: false }),
+  checkRoles("admin"),
   validatorHandler(getUserSchema, "params"),
   async (req, res, next) => {
     try {
