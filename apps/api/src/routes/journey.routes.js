@@ -17,8 +17,7 @@ const service = new JourneyService();
 
 router.get(
 	"/",
-	passport.authenticate("jwt", { session: false }),
-	checkRoles("admin", "passenger"),
+
 	async (req, res, next) => {
 		try {
 			let journeys = await service.findAll();
@@ -31,8 +30,7 @@ router.get(
 
 router.get(
 	"/:id",
-	passport.authenticate("jwt", { session: false }),
-	checkRoles("admin", "passenger"),
+
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -47,8 +45,7 @@ router.get(
 
 router.get(
 	"/:id/seats",
-	passport.authenticate("jwt", { session: false }),
-	checkRoles("admin", "passenger"),
+
 	validatorHandler(getJourneySchema, "params"),
 	async (req, res, next) => {
 		try {

@@ -88,13 +88,6 @@ class AuthService {
 			},
 		});
 
-		// await transporter.sendMail({
-		// 	from: `${config.mail}`,
-		// 	to: `${user.email}`,
-		// 	subject: messageData.subject,
-		// 	text: messageData.text,
-		// 	html: messageData.html,
-		// });
 		await transporter.sendMail(infoEmail);
 		return {
 			message: "email sent",

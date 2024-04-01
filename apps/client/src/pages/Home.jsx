@@ -1,8 +1,8 @@
-import React from "react";
 import { Button } from "antd";
 import { useToast } from "@chakra-ui/react";
-import { FaGoogle } from "react-icons/fa6";
+// import { FaGoogle } from "react-icons/fa6";
 import { Navbar } from "../components/Navbar";
+import { Link } from "react-router-dom";
 const Home = () => {
 	return (
 		<>
@@ -14,6 +14,7 @@ const Home = () => {
 			<Button type="primary">hola </Button>
 			{/* chakra ui */}
 			<ToastExample></ToastExample>
+			<Link to={"/viajes"}>Viajes</Link>
 		</>
 	);
 };
