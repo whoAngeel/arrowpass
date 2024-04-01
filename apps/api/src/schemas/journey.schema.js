@@ -11,7 +11,7 @@ const driverId = joi.number().integer();
 const terminalStartId = joi.number().integer();
 const terminalEndId = joi.number().integer();
 const vehicleId = joi.number().integer();
-const schedule = joi.string();
+const schedule = joi.date();
 
 const createJourneySchema = joi.object({
 	name: name.required(),

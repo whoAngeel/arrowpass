@@ -61,7 +61,19 @@ class JourneyService {
 	}
 
 	async findAll() {
-		return await models.Journey.findAll();
+		return await models.Journey.findAll({
+			include: [
+				{
+					model: models.Vehicle,
+					as: "vehicle",
+					include: "seats",
+				},
+				"driver",
+				"terminalStart",
+				"terminalEnd",
+				"reservations",
+			],
+		});
 	}
 
 	async findOne(id) {

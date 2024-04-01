@@ -24,8 +24,18 @@ const JourneysSchema = {
 		field: "departure_date",
 		type: DataTypes.DATE,
 	},
+	availableSeats: {
+		type: DataTypes.VIRTUAL,
+		get() {
+			return `${this.vehicle?.seats?.reduce((total, val) => {
+				let temp = val.status == "desocupado" ? 1 : 0;
+				return total + temp;
+			}, 0)}/${this.vehicle?.seats?.length}`;
+		},
+	},
 	schedule: {
-		type: DataTypes.STRING,
+		// 01/03/2023
+		type: DataTypes.DATE,
 		allowNull: false,
 	},
 	arrivalDate: {
