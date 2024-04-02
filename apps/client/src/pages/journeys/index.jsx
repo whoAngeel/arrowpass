@@ -2,6 +2,7 @@ import { Navbar } from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Journey from "./Journey";
+import FormSearch from "./FormSearch";
 function index() {
 	const [viajes, setviajes] = useState([]);
 	useEffect(() => {
@@ -20,9 +21,10 @@ function index() {
 
 	return (
 		<div>
-			<Navbar />
+			<Navbar title={"Viajes"} />
+			<FormSearch />
 			{/* <h2>Lista de viajes</h2> */}
-			<ul className="w-full flex flex-col items-center gap-2 mt-4">
+			<ul className="w-full flex flex-col items-center gap-2 mt-4 mb-10">
 				{viajes.map((viaje) => (
 					<Journey key={viaje.id} data={viaje}></Journey>
 				))}

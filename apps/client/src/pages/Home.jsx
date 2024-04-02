@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 const Home = () => {
 	return (
 		<>
-			<Navbar />
+			<Navbar title={"Inicio"}>
+				<Link className="btn btn-ghost" to={"/login"}>
+					Ingresar
+				</Link>
+			</Navbar>
 
 			{/* daisy */}
 			<div className="bg-primary">Hola </div>

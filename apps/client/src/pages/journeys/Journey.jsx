@@ -1,3 +1,5 @@
+// import Moment from "react-moment";
+
 function Journey({ data }) {
 	return (
 		<div className="card w-4/5 bg-primary">
@@ -6,7 +8,7 @@ function Journey({ data }) {
 				<div className="badge badge-secondary badge-lg text-lg">
 					${data.ticketPrice}
 				</div>
-				<p>{data.schedule}</p>
+				{/* <Moment format="DD-MM-YYYY">data.schedule</Moment> */}
 			</div>
 		</div>
 	);

@@ -38,6 +38,8 @@ const Login = () => {
 				.then((res) => {
 					// console.log(res.data.token);
 					localStorage.setItem("userToken", res.data.token);
+					// console.log(res.data.user);
+					localStorage.setItem("user", JSON.stringify(res.data.user));
 					console.log("logged in");
 					navigate("/");
 				})

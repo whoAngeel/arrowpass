@@ -1,7 +1,11 @@
-import React from "react";
+import InputDestino from "./inputDestino";
 
 function FormSearch() {
-	return <div>FormSearch</div>;
+	return (
+		<div>
+			<InputDestino />
+		</div>
+	);
 }
 
 export default FormSearch;
