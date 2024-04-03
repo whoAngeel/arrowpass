@@ -1,17 +1,10 @@
-// import Moment from "react-moment";
+import React from 'react'
 
-function Journey({ data }) {
-	return (
-		<div className="card w-4/5 bg-primary">
-			<div className="card-body">
-				<h2 className="card-title">{data.name}</h2>
-				<div className="badge badge-secondary badge-lg text-lg">
-					${data.ticketPrice}
-				</div>
-				{/* <Moment format="DD-MM-YYYY">data.schedule</Moment> */}
-			</div>
-		</div>
-	);
+function Journey() {
+
+  return (
+    <div>Journey</div>
+  )
 }
 
-export default Journey;
+export default Journey
