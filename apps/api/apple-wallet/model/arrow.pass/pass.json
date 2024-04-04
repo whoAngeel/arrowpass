@@ -1,0 +1,17 @@
+{
+  "description": "Boleto de abordaje",
+  "backgroundColor": "rgb(254,254,254)",
+  "foregroundColor": "rgb(68,68,68)",
+  "labelColor": "rgb(17,17,17)",
+  "organizationName": "Conecta GFA",
+  "passTypeIdentifier": "pass.com.gfa.talendland",
+  "teamIdentifier": "J83NHPZ786",
+  "formatVersion": 1,
+  "boardingPass": {
+    "headerFields": [],
+    "auxiliaryFields": [],
+    "primaryFields": [],
+    "secondaryFields": [],
+    "transitType": "PKTransitTypeBus"
+  }
+}
