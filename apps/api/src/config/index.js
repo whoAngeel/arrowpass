@@ -15,10 +15,11 @@ const config = {
 	mail: process.env.GOOGLE_MAIL,
 	secretRecovery: process.env.SECRET_RECOVERY || "recoverysecret",
 	/// google wallet
-	issuerId: process.env.ISSUER_ID,
-	classId: `${process.env.ISSUER_ID}.${uuidv4()}`,
+	issuerId: process.env.GOOGLE_ISSUER_ID,
+	classSuffix: uuidv4(),
 	baseURL: process.env.G_WALLET_BASE_URL,
-	credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS || "../optimal.json",
+	//credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS || "../../src/optimal.json",
+
 };
 
 module.exports = { config };
