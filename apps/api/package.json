@@ -34,6 +34,8 @@
 		"passport-local": "^1.0.0",
 		"sequelize": "^6.37.1",
 		"set-tz": "^0.2.0",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^5.0.0",
 		"timeago.js": "^4.0.2",
 		"uuid": "^9.0.1"
 	},
