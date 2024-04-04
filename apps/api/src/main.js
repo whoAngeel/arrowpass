@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const session = require("express-session");
-const passport = require("passport");
 const setTZ = require("set-tz");
 setTZ("America/Mexico_City");
 // console.log(new Date());
