@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const Demo = require("../services/googlewallet.service");
-const GoogleWalletService = require("../services/google.wallet.service");
 const EmailService = require("../services/email.service");
 const generateAppleTicket = require("../services/appleWallet.service");
 const service = new Demo();

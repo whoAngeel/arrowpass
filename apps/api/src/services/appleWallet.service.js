@@ -1,5 +1,4 @@
 const axios = require("axios");
-const getShortName = require("./shortnames.service");
 const { PKPass } = require("passkit-generator");
 const { readFile, writeFile } = require("fs/promises");
 
@@ -27,12 +26,12 @@ async function generateAppleTicket(organization, ticket) {
 		},
 		{
 			key: "origin",
-			value: getShortName(ticket?.origin),
+			value: "fadsf", // TODO: cambiar
 			label: ticket?.origin,
 		},
 		{
 			key: "destination",
-			value: getShortName(ticket?.destination),
+			value: "fdgdfgd", // TODO cambiar
 			label: ticket?.destination,
 			textAlignment: "PKTextAlignmentRight",
 		}
