@@ -6,26 +6,6 @@ const service = new Demo();
 const emailService = new EmailService();
 const router = new Router();
 
-/**
- * Generate a flow ticket.
- *
- * 1.- Create de Wallet Ticket
- * 2.- Send by gmail
- */
-router.post("/generate", async (req, res, next) => {
-	// const service = new Demo();
-	console.log("Hola mundo");
-
-	try {
-		await service.createClass(req.body);
-		await service.createObject(req.body);
-		response = await service.createJwtNewObjects();
-		res.json({ message: "Class created successfully", button: response });
-	} catch (error) {
-		next(error);
-	}
-});
-
 router.post("/send-google-ticket", async (req, res, next) => {
 	try {
 		await service.createClass(req.body);
