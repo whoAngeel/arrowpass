@@ -28,12 +28,22 @@ class EmailService {
 
 	async sendAppleTicket(email, pathFile) {
 		try {
-			const mailOptions = this.composeMailOptions(
+			let mailOptions = this.composeMailOptions(
 				email,
 				null,
 				"Boleto Virtual (apple)"
 			);
-			await this.sendEmail(mailOptions);
+
+			await this.sendEmail({
+				...mailOptions,
+				attachments: [
+					{
+						filename: "style.css",
+						path: "./public/css/style.css",
+						cid: "uniq-stylecss.png",
+					},
+				],
+			});
 			console.log("Correo enviado correctamente");
 			return {
 				message: "Email enviado",

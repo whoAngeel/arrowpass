@@ -52,6 +52,7 @@ app.use(boomErrorHandler);
 app.use(ormErrorHandler);
 app.use(errorHandler);
 app.use(express.static("public"));
+app.use(express.static("passes"));
 
 app.set("sequelize", sequelize);
 
