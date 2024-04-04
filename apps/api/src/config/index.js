@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const { v4: uuidv4 } = require("uuid");
 const config = {
 	port: process.env.PORT || 3000,
 	dbHost: process.env.DB_HOST,
@@ -14,6 +14,11 @@ const config = {
 	mailPass: process.env.GOOGLE_MAIL_PASS,
 	mail: process.env.GOOGLE_MAIL,
 	secretRecovery: process.env.SECRET_RECOVERY || "recoverysecret",
+	/// google wallet
+	issuerId: process.env.ISSUER_ID,
+	classId: `${process.env.ISSUER_ID}.${uuidv4()}`,
+	baseURL: process.env.G_WALLET_BASE_URL,
+	credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS || "../optimal.json",
 };
 
 module.exports = { config };

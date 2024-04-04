@@ -18,6 +18,7 @@
 		"dotenv": "^16.4.5",
 		"express": "^4.19.1",
 		"express-session": "^1.18.0",
+		"google-auth-library": "^9.7.0",
 		"install": "^0.13.0",
 		"joi": "^17.12.2",
 		"jsonwebtoken": "^9.0.2",
@@ -33,7 +34,8 @@
 		"passport-local": "^1.0.0",
 		"sequelize": "^6.37.1",
 		"set-tz": "^0.2.0",
-		"timeago.js": "^4.0.2"
+		"timeago.js": "^4.0.2",
+		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
 		"nodemon": "^3.1.0"
