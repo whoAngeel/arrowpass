@@ -7,10 +7,10 @@ const ejs = require("ejs");
 class EmailService {
 	constructor() {}
 
-	async sendGMailTicket(email, passenger, token) {
-		const htmlContent = this.generateHTMLContent(passenger, token);
+	async sendGMailTicket(ticketBody, link) {
+		const htmlContent = this.generateHTMLContent(ticketBody?.passenger, link);
 		const mailOptions = this.composeMailOptions(
-			email,
+			ticketBody.email,
 			htmlContent,
 			"Boleto Virtual"
 		);
@@ -54,9 +54,9 @@ class EmailService {
 		}
 	}
 
-	generateHTMLContent(passenger, token) {
+	generateHTMLContent(passenger, link) {
 		const htmlTemplate = fs.readFileSync("public/template.ejs", "utf-8");
-		return ejs.render(htmlTemplate, { passenger, token });
+		return ejs.render(htmlTemplate, { passenger, link });
 	}
 
 	composeMailOptions(email, htmlContent, subject) {
