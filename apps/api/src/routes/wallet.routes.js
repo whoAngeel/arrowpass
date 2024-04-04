@@ -14,46 +14,46 @@ const router = new Router();
  * 2.- Send by gmail
  */
 router.post("/generate", async (req, res, next) => {
-  // const service = new Demo();
-  console.log("Hola mundo");
+	// const service = new Demo();
+	console.log("Hola mundo");
 
-  try {
-    await service.createClass(req.body);
-    await service.createObject(req.body);
-    response = await service.createJwtNewObjects();
-    res.json({ message: "Class created successfully", button: response });
-  } catch (error) {
-    next(error);
-  }
+	try {
+		await service.createClass(req.body);
+		await service.createObject(req.body);
+		response = await service.createJwtNewObjects();
+		res.json({ message: "Class created successfully", button: response });
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.post("/send-google-ticket", async (req, res, next) => {
-  try {
-    await service.createClass(req.body);
-    await service.createObject(req.body);
-    const ticketBody = req.body;
-    const linkWToken = await service.createJwtNewObjects();
-    // const passenger = "angel";
-    const rta = await emailService.sendGMailTicket(ticketBody, linkWToken);
-    res.status(200).json(rta);
-  } catch (error) {
-    next(error);
-  }
+	try {
+		await service.createClass(req.body);
+		await service.createObject(req.body);
+		const ticketBody = req.body;
+		const linkWToken = await service.createJwtNewObjects();
+		// const passenger = "angel";
+		const rta = await emailService.sendGMailTicket(ticketBody, linkWToken);
+		res.status(200).json(rta);
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.post("/send-apple-ticket", async (req, res, next) => {
-  try {
-    const { organization, ticket, passengerEmail } = req.body;
+	try {
+		const { organization, ticket, passengerEmail } = req.body;
 
-    const fileName = await generateAppleTicket(organization, ticket);
+		const fileName = await generateAppleTicket(organization, ticket);
 
-    const rta = await emailService.sendAppleTicket(
-      passengerEmail,
-      "./" + fileName
-    );
-    return res.status(200).json(rta);
-  } catch (error) {
-    next(error);
-  }
+		const rta = await emailService.sendAppleTicket(
+			passengerEmail,
+			"./" + fileName
+		);
+		return res.status(200).json(rta);
+	} catch (error) {
+		next(error);
+	}
 });
 module.exports = router;
