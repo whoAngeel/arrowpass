@@ -1,7 +1,9 @@
 const express = require("express");
-const debug = require("debug")("api:main");
 const cors = require("cors");
 const morgan = require("morgan");
+const setTZ = require("set-tz");
+setTZ("America/Mexico_City");
+// console.log(new Date());
 
 const { config } = require("./config");
 const routerApi = require("./routes");
@@ -9,6 +11,7 @@ const {
 	logErrors,
 	boomErrorHandler,
 	errorHandler,
+	ormErrorHandler,
 } = require("./middlewares/error.handler");
 
 const app = express();
@@ -27,8 +30,12 @@ routerApi(app);
 // middlewares de errores
 app.use(logErrors);
 app.use(boomErrorHandler);
+app.use(ormErrorHandler);
 app.use(errorHandler);
+app.use(express.static("public"));
+app.use(express.static("passes"));
+app.use(express.static("apple-wallet"));
 
 app.listen(config.port, () => {
-	debug(`Server is running on http://localhost:${config.port}`);
+	console.log(`Server is running on http://localhost:${config.port}`);
 });

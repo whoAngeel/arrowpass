@@ -16,5 +16,11 @@
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
 		}
+	},
+	"dependencies": {
+		"googleapis": "^134.0.0",
+		"jsonwebtoken": "^9.0.2",
+		"react-router-dom": "^6.22.3",
+		"uuid": "^9.0.1"
 	}
 }

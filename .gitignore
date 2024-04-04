@@ -159,3 +159,6 @@ sketch
 .turbo
 
 # End of https://www.toptal.com/developers/gitignore/api/turbo,node,react
+.env
+optimal.json
+./apps/api/src/optimal.json
